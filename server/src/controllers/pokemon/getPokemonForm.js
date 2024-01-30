@@ -3,13 +3,13 @@ const findElement = require('../../data/functions/findElement')
 
 module.exports = async (req, res) => {
     let id = req.params.id
-    let query = req.query
-    let props = { db: 'PokemonForm', short: true }
-    console.log(query)
-    if (!isNaN(id)) props.id = parseInt(id)
-    else props.name = id
+    let data = findElement('PokemonForm', isNaN(id) ? id : parseInt(id))
 
-    let data = findElement(props)
+    data.specie = findElement('PokemonSpecie', data.specie)
+
+    if (data) {
+        delete data.movements
+    }
 
     return response(res, 200, data)
 }

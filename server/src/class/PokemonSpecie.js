@@ -1,4 +1,5 @@
 const checkBoolean = require('../utils/checkBoolean')
+const getImgURL = require('../utils/getImgURL')
 
 module.exports = class PokemonSpecie {
 
@@ -13,7 +14,7 @@ module.exports = class PokemonSpecie {
         this.isMythical = checkBoolean(props.isMythical, false)
         this.isLegendary = checkBoolean(props.isLegendary, false)
         this.isUltraBeast = checkBoolean(props.isUltraBeast, false)
-        this.image = props.image || null
+        this.image = getImgURL({ name: props.name, route: 'pokemon'  })
 
     }
 

@@ -3,7 +3,7 @@ const getColor = require("./getColor")
 module.exports = function createEmbed(message, props, obj = false) {
 
     const embed = {
-        color: 'blue',
+        color: getColor('blue').int,
         author: {
             name: message.author.username,
             icon_url: message.author.displayAvatarURL({ size: 256, dynamic: true }),
@@ -20,11 +20,11 @@ module.exports = function createEmbed(message, props, obj = false) {
     if (props.url) embed.url = String(props.url)
 
     // Author
-    if (props.author === null) {
-        delete embed.author
-        delete embed.image
+    if (props.author === null) delete embed.author
+    if (props.author) {
+        embed.author.name = String(props.author)
+        delete embed.author.icon_url
     }
-    if (props.author) embed.author.name = String(props.author)
 
     // Description
     if (props.description) embed.description = String(props.description)

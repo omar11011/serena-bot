@@ -1,4 +1,5 @@
 const checkBoolean = require('../utils/checkBoolean')
+const getImgURL = require('../utils/getImgURL')
 
 module.exports = class PokemonForm {
 
@@ -16,7 +17,7 @@ module.exports = class PokemonForm {
         this.stats = this.checkStats(props.stats)
         this.evolutions = this.checkEvolutions(props.evolutions)
         this.movements = this.checkMovements(props.movements)
-        this.images = this.checkImages(props.images)
+        this.images = this.checkImages(props.name, props.isGiga)
 
     }
 
@@ -75,12 +76,10 @@ module.exports = class PokemonForm {
         return data
     }
 
-    checkImages(data) {
-        if (data === undefined || typeof data !== "object") data = {}
-
+    checkImages(name, isGiga) {
         return {
-            front_default: data.front_default || null,
-            front_shiny: data.front_shiny || null,
+            front_default: getImgURL({ name, route: 'pokemon' }),
+            front_shiny: getImgURL({ name, route: `pokemon${isGiga ? '' : '/shiny'}` }),
         }
     }
 

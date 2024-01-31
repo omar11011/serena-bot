@@ -27,11 +27,11 @@ module.exports = class PokemonSpecie {
     checkGender(prob) {
         const gender = { male: 50, female: 50 }
 
-        if (prob === undefined) {
+        if (prob === null) {
             gender.male = 0
             gender.female = 0
         }
-        else {
+        if (prob) {
             gender.male = prob
             gender.female = 100 - prob
         }

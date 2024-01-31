@@ -12,6 +12,7 @@ router.put('/user-exp', isAuthorized, async (req, res) => await controller.addUs
 
 // Pokémon
 router.get('/pokemon/form/:id', async (req, res) => await controller.getPokemonForm(req, res))
+router.get('/pokemon/specie/:id', async (req, res) => await controller.getPokemonSpecie(req, res))
 
 // Gif
 router.post('/gif', isAuthorized, async (req, res) => await controller.createGif(req, res))

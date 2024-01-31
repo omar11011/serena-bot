@@ -19,12 +19,11 @@ module.exports = new Command({
         let data = (await axios.get({ url: `pokemon/form/${id}` })).data
 
         if (!data) return message.react('❓')
-        console.log(data)
+        
         return createEmbed(message, {
             color: data.types[0].toLowerCase(),
-            author: `${data.specie.name} #${data.specie.pokedex}`,
-            title: `${shiny ? '⭐ ' : ''}${data.name}`,
-            description: `Región: ${data.region}\nTipos: ${data.types.join(' / ')}\nGrupo huevo: ${data.specie.eggGroup.join(' / ')}`,
+            author: `${shiny ? '⭐ ' : ''}${data.name}`,
+            description: `**Región:** ${data.region}\n**Especie:** ${data.specie}\n**Tipos:** ${data.types.join(' / ')}`,
             image: data.images[!shiny ? 'front_default' : 'front_shiny'],
             fields: [
                 { name: 'HP', value: String(data.stats.hp), inline: true },

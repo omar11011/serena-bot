@@ -15,6 +15,8 @@ router.get('/pokemon/form/:id', async (req, res) => await controller.getPokemonF
 router.get('/pokemon/specie/:id', async (req, res) => await controller.getPokemonSpecie(req, res))
 router.get('/pokemon/moves/:id', async (req, res) => await controller.getPokemonMovements(req, res))
 
+router.get('/move/:id', async (req, res) => await controller.getMovement(req, res))
+
 // Gif
 router.post('/gif', isAuthorized, async (req, res) => await controller.createGif(req, res))
 router.get('/gif', async (req, res) => await controller.getAllGifs(req, res))

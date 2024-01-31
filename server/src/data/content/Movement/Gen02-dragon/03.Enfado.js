@@ -4,7 +4,7 @@ module.exports = {
     power: 120,
     stateChanges: [
         {
-            state: "Confundido",
+            state: "confundido",
             prob: 50,
             toUser: true,
         },

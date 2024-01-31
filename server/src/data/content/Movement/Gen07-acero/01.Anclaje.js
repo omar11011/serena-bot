@@ -4,7 +4,7 @@ module.exports = {
     power: 80,
     stateChanges: [
         {
-            state: "Atrapado",
+            state: "atrapado",
         },
     ],
     z_move: [

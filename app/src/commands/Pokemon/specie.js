@@ -6,15 +6,15 @@ const { axios } = require('../../services')
 module.exports = new Command({
     name: "specie",
     description: "Muestra información de un especie Pokémon en específico.",
-    args: ['<id>'],
+    args: ['id'],
 	async execute(message, props) {
-        let id = props.args.join(' ').toLowerCase()
+        let id = props.args.join(' ')
         let data = (await axios.get({ url: `pokemon/specie/${id}` })).data
 
         if (!data) return message.react('❓')
         
         return createEmbed(message, {
-            color: 'random',
+            color: data.types ? data.types[0] : 'random',
             author: `${data.name} #${data.pokedex}`,
             description: `**Forma${data.forms.length <= 1 ? '' : 's'}:** ${data.forms.join(', ')}`,
             image: data.image,

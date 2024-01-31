@@ -6,7 +6,7 @@ module.exports = {
     hits: 5,
     stateChanges: [
         {
-            state: "Apresado",
+            state: "apresado",
         },
     ],
     z_move: [

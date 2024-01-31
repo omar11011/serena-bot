@@ -5,11 +5,11 @@ module.exports = {
     precision: 95,
     stateChanges: [
         {
-            state: "Quemado",
+            state: "quemado",
             prob: 50,
         },
         {
-            state: "Descongelado",
+            state: "descongelado",
             toUser: true,
         },
     ],

@@ -6,7 +6,7 @@ const { axios } = require('../../services')
 module.exports = new Command({
     name: "pokemon",
     description: "Muestra información de un Pokémon en específico.",
-    args: ['<id>'],
+    args: ['id'],
 	async execute(message, props) {
         let shiny = false
         let id = props.args.join(' ').toLowerCase()

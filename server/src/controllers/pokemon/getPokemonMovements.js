@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
 
     if (!category || category === '') category = 'nivel'
 
-    let data = findElement('PokemonForm', isNaN(id) ? id : parseInt(id))
+    let data = findElement('PokemonForm', id)
 
     if (data) {
         const movements = data.movements.filter(e => e.category === category.toLowerCase()).filter(e => findElement('Movement', e.name))

@@ -3,10 +3,11 @@ const url = 'https://raw.githubusercontent.com/omar11011/serena-bot/main/server/
 const replaces = [
     [/ /g, "-"],
 ]
+const checkWord = require('./checkWord')
 
 module.exports = ({ name, route, extension }) => {
 
-    name = name.trim()
+    name = checkWord(name)
 
     if (!route) route = ''
     if (!extension) extension = '.png'

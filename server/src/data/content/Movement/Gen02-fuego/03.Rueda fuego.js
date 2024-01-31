@@ -4,11 +4,11 @@ module.exports = {
     power: 60,
     stateChanges: [
         {
-            state: "Quemado",
+            state: "quemado",
             prob: 10,
         },
         {
-            state: "Descongelado",
+            state: "descongelado",
             toUser: true,
         },
     ],

@@ -18,7 +18,7 @@ module.exports = new Command({
                 id = id.replace(e, '')
             }
         })
-        console.log(id)
+        
         let data = (await axios.get({ url: `pokemon/moves/${id}?category=${category}` })).data
 
         if (!data) return message.react('❓')

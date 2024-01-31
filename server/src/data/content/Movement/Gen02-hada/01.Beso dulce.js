@@ -5,7 +5,7 @@ module.exports = {
     precision: 75,
     stateChanges: [
         {
-            state: "Confundido",
+            state: "confundido",
             prob: 40,
         },
     ],

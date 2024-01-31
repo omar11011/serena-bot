@@ -5,7 +5,7 @@ module.exports = {
     power: 60,
     stateChanges: [
         {
-            state: "Paralizado",
+            state: "paralizado",
             prob: 30,
         },
     ],

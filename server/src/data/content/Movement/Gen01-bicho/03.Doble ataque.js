@@ -5,7 +5,7 @@ module.exports = {
     hits: 2,
     stateChanges: [
         {
-            state: "Envenenado",
+            state: "envenenado",
             prob: 20,
         },
     ],

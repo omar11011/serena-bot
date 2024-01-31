@@ -9,7 +9,7 @@ module.exports = new Command({
     alias: ['prefijo'],
     userPermissions: ['Administrator'],
     description: "Cambia mi prefijo en el servidor.",
-    args: ['<prefix>'],
+    args: ['prefix'],
 	async execute(message, props) {
         let prefix = props.prefix
         let newPrefix = props.args[0].toLowerCase()

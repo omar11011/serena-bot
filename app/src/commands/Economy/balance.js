@@ -6,7 +6,6 @@ const { axios } = require('../../services')
 module.exports = new Command({
     name: "balance",
     alias: ["bal"],
-    cooldown: 10,
     description: "Revisa tu balance.",
 	async execute(message, props) {
         let user = (await axios.create({

@@ -1,6 +1,7 @@
 module.exports = {
     name: "Mega Venusaur",
     types: ["Planta", "Veneno"],
+    pre_evolution: "Venusaur",
     isMega: true,
     stats: {
         hp: 80,

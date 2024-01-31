@@ -68,7 +68,7 @@ module.exports = class PokemonForm {
             data[i] = {
                 name: data[i].name.trim(),
                 level: data[i].level || 1,
-                category: data[i].category || "level",
+                category: data[i].category || "nivel",
                 parents: data[i].parents || [],
             }
         }

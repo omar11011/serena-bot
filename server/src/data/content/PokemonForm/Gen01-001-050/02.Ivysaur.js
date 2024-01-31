@@ -9,32 +9,31 @@ module.exports = {
         spdefense: 80,
         speed: 60,
     },
+    pre_evolution: "Bulbasaur",
     evolutions: [
         { form: "Venusaur", level: 32 },
     ],
     movements: [
         // Level
-        { name: "latigo cepa" },
-        { name: "placaje" },
-        { name: "hoja afilada", level: 12 },
-        { name: "bomba germen", level: 20 },
-        { name: "derribo", level: 25 },
-        { name: "latigazo", level: 45 },
-        { name: "rayo solar", level: 50 },
+        { name: "Látigo cepa" }, { name: "Placaje" }, { name: "Gruñido" },
+        { name: "Desarrollo" }, { name: "Drenadoras", level: 9 }, { name: "Hoja afilada", level: 12 },
+        { name: "Polvo veneno", level: 15 }, { name: "Somnífero", level: 15 }, { name: "Bomba germen", level: 20 },
+        { name: "Derribo", level: 25 }, { name: "Dulce aroma", level: 30 }, { name: "Síntesis", level: 35 },
+        { name: "Abatidoras", level: 40 }, { name: "Latigazo", level: 45 }, { name: "Rayo solar", level: 50 },
         // Machine
         ...[
-            "derribo", "bomba acida", "abrecaminos", "imagen", "hoja magica", "semilladora",
-            "carga toxica", "falso tortazo", "golpe cuerpo", "bomba germen", "hierba lazo",
-            "gigadrenado", "energibola", "voto planta", "bomba lodo", "lluevehojas",
-            "rayo solar", "teraexplosion", "desarme", "meteorobola", "fitoimpulso",
-            "doble filo",
+            "Derribo", "Encanto", "Protección", "Bomba ácida", "Abrecaminos", "Imagen", "Hoja mágica", "Carga tóxica", "Aguante",
+            "Día soleado", "Semilladora", "Falso tortazo", "Golpe cuerpo", "Sonámbulo", "Bomba germen", "Hierba lazo", "Descanso",
+            "Danza espada", "Sustituto", "Gigadrenado", "Energibola", "Refuerzo", "Campo de hierba", "Voto planta", "Bomba lodo",
+            "Lluevehojas", "Rayo solar", "Teraexplosión", "Rugido", "Tóxico", "Desarme", "Meteorobola", "Fitoimpulso", "Doble filo",
+            "Maldición",
         ].map(e => {
-            return { name: e, category: "machine" }
+            return { name: e, category: "maquina" }
         }),
         ...[
-            "doble filo", "golpe cuerpo", "bofeton lodo", "corte furia", "ronquido",
-            "bomba germen", "desarme", "golpe cabeza", "voto planta", "atadura",
-            "gigadrenado", "fitoimpulso",
+            "Danza espada", "Doble filo", "Golpe cuerpo", "Mimético", "Sustituto", "Aguante", "Bofetón lodo", "Contoneo", "Corte furia",
+            "Rizo defensa", "Ronquido", "Sonámbulo", "Bomba germen", "Desarme", "Síntesis", "Abatidoras", "Disparo demora", "Golpe cabeza",
+            "Voto planta", "Atadura", "Gigadrenado", "Fitoimpulso",
         ].map(e => {
             return { name: e, category: "tutor" }
         }),

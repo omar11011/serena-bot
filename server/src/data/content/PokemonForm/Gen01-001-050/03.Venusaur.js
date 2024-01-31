@@ -9,34 +9,33 @@ module.exports = {
         spdefense: 100,
         speed: 80,
     },
+    pre_evolution: "Ivysaur",
     evolutions: [
         { form: "Mega Venusaur", type: "mega", item: "Venusaurita" },
         { form: "Venusaur Gigamax", type: "giga" },
     ],
     movements: [
         // Level
-        { name: "tormenta floral" }, { name: "danza petalo" }, { name: "placaje" },
-        { name: "latigo cepa" },
-        { name: "hoja afilada", level: 12 },
-        { name: "bomba germen", level: 20 },
-        { name: "derribo", level: 25 },
-        { name: "latigazo", level: 51 },
-        { name: "rayo solar", level: 58 },
+        { name: "Tormenta floral" }, { name: "Desarrollo" }, { name: "Danza pétalo" }, { name: "Látigo cepa" }, { name: "Placaje" },
+        { name: "Gruñido" }, { name: "Drenadoras", level: 9 }, { name: "Hoja afilada", level: 12 }, { name: "Somnífero", level: 15 },
+        { name: "Polvo veneno", level: 15 }, { name: "Bomba germen", level: 20 }, { name: "Derribo", level: 25 },
+        { name: "Dulce aroma", level: 30 }, { name: "Síntesis", level: 37 }, { name: "Abatidoras", level: 44 },
+        { name: "Latigazo", level: 51 }, { name: "Rayo solar", level: 58 },    
         // Machine
         ...[
-            "derribo", "bomba acida", "abrecaminos", "imagen", "terratemblor", "pataleta",
-            "hoja magica", "carga toxica", "semilladora", "falso tortazo", "golpe cuerpo",
-            "bomba germen", "hierba lazo", "puya nociva", "gigadrenado", "energibola",
-            "tierra viva", "voto planta", "bomba lodo", "terremoto", "gigaimpacto",
-            "planta feroz", "lluevehojas", "hiperrayo", "rayo solar", "teraexplosion",
-            "desarme", "meteorobola", "fitoimpulso", "doble filo", "tormenta floral",
+            "Derribo", "Encanto", "Cara susto", "Protección", "Bomba ácida", "Abrecaminos", "Imagen", "Terratemblor", "Hoja mágica",
+            "Carga tóxica", "Aguante", "Día soleado", "Semilladora", "Falso tortazo", "Golpe cuerpo", "Sonámbulo", "Bomba germen",
+            "Hierba lazo", "Puya nociva", "Pataleta", "Descanso", "Danza espada", "Sustituto", "Gigadrenado", "Energibola", "Amnesia",
+            "Refuerzo", "Tierra viva", "Campo de hierba", "Voto planta", "Bomba lodo", "Terremoto", "Gigaimpacto", "Planta feroz",
+            "Lluevehojas", "Hiperrayo", "Rayo solar", "Teraexplosión", "Rugido", "Tóxico", "Desarme", "Meteorobola", "Fitoimpulso",
+            "Doble filo", "Tormenta floral", "Maldición",
         ].map(e => {
-            return { name: e, category: "machine" }
+            return { name: e, category: "maquina" }
         }),
         ...[
-            "doble filo", "golpe cuerpo", "planta feroz", "bofetón lodo", "corte furia",
-            "ronquido", "bomba germen", "desarme", "enfado", "golpe cabeza", "atadura",
-            "voto planta", "gigadrenado", "pataleta", "fitoimpulso", "pulso de campo",
+            "Danza espada", "Doble filo", "Golpe cuerpo", "Mimético", "Planta feroz", "Sustituto", "Aguante", "Bofetón lodo", "Contoneo",
+            "Corte furia", "Rizo defensa", "Ronquido", "Sonámbulo", "Bomba germen", "Desarme", "Enfado", "Síntesis", "Abatidoras", "Bloqueo",
+            "Disparo demora", "Golpe cabeza", "Voto planta", "Atadura", "Gigadrenado", "Pataleta", "Fitoimpulso", "Pulso de campo",
         ].map(e => {
             return { name: e, category: "tutor" }
         }),

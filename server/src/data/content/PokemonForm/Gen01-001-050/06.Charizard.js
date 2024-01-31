@@ -9,6 +9,7 @@ module.exports = {
         spdefense: 85,
         speed: 100,
     },
+    pre_evolution: "Charmeleon",
     evolutions: [
         { form: "Mega Charizard X", type: "mega", item: "Charizardita X" },
         { form: "Mega Charizard Y", type: "mega", item: "Charizardita Y" },
@@ -16,39 +17,34 @@ module.exports = {
     ],
     movements: [
         // Level
-        { name: "tajo aereo" }, { name: "arañazo" }, { name: "ascuas" },
-        { name: "onda ignea" }, { name: "garra dragon" },
-        { name: "dragoaliento", level: 12 },
-        { name: "colmillo igneo", level: 19 },
-        { name: "cuchillada", level: 24 },
-        { name: "lanzallamas", level: 30 },
-        { name: "giro fuego", level: 46 },
-        { name: "infierno", level: 54 },
-        { name: "envite igneo", level: 62 },
+        { name: "Tajo aéreo", level: 1 }, { name: "Arañazo", level: 1 }, { name: "Gruñido", level: 1 },
+        { name: "Ascuas", level: 1 }, { name: "Pantalla de humo", level: 1 }, { name: "Onda ígnea", level: 1 },
+        { name: "Garra dragón", level: 1 }, { name: "Dragoaliento", level: 12 }, { name: "Colmillo ígneo", level: 19 },
+        { name: "Cuchillada", level: 24 }, { name: "Lanzallamas", level: 30 }, { name: "Cara susto", level: 39 },
+        { name: "Giro fuego", level: 46 }, { name: "Infierno", level: 54 }, { name: "Envite ígneo", level: 62 },          
         // Machine
         ...[
-            "derribo", "colmillo igneo", "acrobata", "imagen", "golpe aereo", "terratemblor",
-            "tumba rocas", "nitrocarga", "lanzamiento", "cola dragon", "excavar", "demolicion", "garra umbria", "golpe cuerpo", "puño fuego", "puño trueno",
-            "garra dragon", "avalancha", "vuelo", "triturar", "terremoto", "gigaimpacto",
-            "enfado", "envite igneo", "golpe calor", "puño certero", "doble filo",
-            "colera ardiente", "vasto impacto", "giro fuego", "meteoros", "aire afilado",
-            "tajo aereo", "pulso dragon", "onda ignea", "lanzallamas", "llamarada",
-            "voto fuego", "anillo igneo", "sofoco", "onda certera", "vendaval", "hiperrayo",
-            "rayo solar", "teraexplosion", "meteorobola", "arenas ardientes",
+            "Derribo", "Cara susto", "Protección", "Colmillo ígneo", "Acróbata", "Giro fuego", "Imagen", "Golpe aéreo", "Terratemblor",
+            "Meteoros", "Tumba rocas", "Nitrocarga", "Aire afilado", "Lanzamiento", "Cola dragón", "Aguante", "Día soleado",
+            "Tormenta de arena", "Excavar", "Demolición", "Garra umbría", "Tajo aéreo", "Golpe cuerpo", "Puño fuego", "Puño trueno",
+            "Sonámbulo", "Garra dragón", "Descanso", "Avalancha", "Danza espada", "Vuelo", "Danza dragón", "Sustituto", "Fuego fatuo",
+            "Triturar", "Pulso dragón", "Onda ígnea", "Lanzallamas", "Refuerzo", "Llamarada", "Voto fuego", "Terremoto", "Gigaimpacto",
+            "Anillo ígneo", "Enfado", "Sofoco", "Onda certera", "Vendaval", "Hiperrayo", "Envite ígneo", "Rayo solar", "Teraexplosión",
+            "Rugido", "Golpe calor", "Puño certero", "Meteorobola", "Doble filo", "Cólera ardiente", "Arenas ardientes", "Vasto impacto",
+            "Bramido dragón",
         ].map(e => {
-            return { name: e, category: "machine" }
+            return { name: e, category: "maquina" }
         }),
         ...[
-            "avalancha", "contraataque", "doble filo", "golpe cuerpo", "megapatada",
-            "megapuño", "movimiento sismico", "corte furia", "puño dinamico", "puño fuego",
-            "enfado", "puño trueno", "golpe cabeza", "cola ferrea", "puño certero",
-            "ala bis", "rafaga escamas", "lanzallamas", "anillo igneo", "bofeton lodo",
-            "rapidez", "ronquido", "aire afilado", "ciclon", "onda ignea", "viento aciago",
-            "voto fuego", "pulso dragon", "arenas ardientes",
+            "Lanzallamas", "Anillo ígneo", "Avalancha", "Contraataque", "Danza espada", "Doble filo", "Golpe cuerpo", "Megapatada",
+            "Megapuño", "Mimético", "Movimiento sísmico", "Sustituto", "Aguante", "Bofetón lodo", "Contoneo", "Corte furia", "Puño dinámico",
+            "Puño fuego", "Rapidez", "Rizo defensa", "Ronquido", "Sonámbulo", "Aire afilado", "Ciclón", "Enfado", "Onda ígnea", "Puño trueno",
+            "Viento aciago", "Golpe cabeza", "Viento afín", "Voto fuego", "Cola férrea", "Pulso dragón", "Respiro", "Puño certero",
+            "Despejar", "Ala bis", "Arenas ardientes", "Ráfaga escamas",
         ].map(e => {
             return { name: e, category: "tutor" }
         }),
         // Special
-        { name: "sismico", category: "special" },
+        { name: "Sísmico", category: "especial" },
     ],
 }

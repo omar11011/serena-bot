@@ -15,74 +15,60 @@ module.exports = {
     ],
     movements: [
         // Level
-        { name: "arañazo" },
-        { name: "ascuas", level: 4 },
-        { name: "dragoaliento", level: 12 },
-        { name: "colmillo igneo", level: 17 },
-        { name: "cuchillada", level: 20 },
-        { name: "lanzallamas", level: 24 },
-        { name: "giro fuego", level: 32 },
-        { name: "infierno", level: 36 },
-        { name: "envite igneo", level: 40 },
+        { name: "Arañazo", level: 1 }, { name: "Gruñido", level: 1 }, { name: "Ascuas", level: 4 },
+        { name: "Pantalla de humo", level: 8 }, { name: "Dragoaliento", level: 12 }, { name: "Colmillo ígneo", level: 17 },
+        { name: "Cuchillada", level: 20 }, { name: "Lanzallamas", level: 24 }, { name: "Cara susto", level: 28 },
+        { name: "Giro fuego", level: 32 }, { name: "Infierno", level: 36 }, { name: "Envite ígneo", level: 40 },          
         // Machine
         ...[
-            "derribo", "colmillo igneo", "giro fuego", "imagen", "garrametal", "meteoros",
-            "tumba rocas", "nitrocarga", "lanzamiento", "cola dragon", "excavar",
-            "falso tortazo", "demolicion", "garra umbria", "golpe cuerpo", "puño fuego",
-            "puño trueno", "garra dragon", "avalancha", "triturar", "pulso dragon",
-            "onda ignea", "lanzallamas", "llamarada", "voto fuego", "enfado", "sofoco",
-            "onda certera", "envite igneo", "teraexplosion", "puño certero", "meteorobola",
-            "colera ardiente", "vasto impacto",
+            "Derribo", "Cara susto", "Protección", "Colmillo ígneo", "Giro fuego", "Imagen", "Garra metal", "Meteoros", "Tumba rocas",
+            "Nitrocarga", "Lanzamiento", "Cola dragón", "Aguante", "Día soleado", "Excavar", "Falso tortazo", "Demolición", "Garra umbría",
+            "Golpe cuerpo", "Puño fuego", "Puño trueno", "Sonámbulo", "Garra dragón", "Descanso", "Avalancha", "Danza espada", "Danza dragón",
+            "Sustituto", "Fuego fatuo", "Triturar", "Pulso dragón", "Onda ígnea", "Lanzallamas", "Refuerzo", "Llamarada", "Voto fuego",
+            "Enfado", "Sofoco", "Onda certera", "Envite ígneo", "Teraexplosión", "Rugido", "Puño certero", "Meteorobola", "Cólera ardiente",
+            "Vasto impacto",
         ].map(e => {
-            return { name: e, category: "machine" }
+            return { name: e, category: "maquina" }
         }),
         // Tutor
         ...[
-            "lanzallamas", "avalancha", "contraataque", "doble filo", "golpe cuerpo",
-            "megapuño", "megapatada", "sismico", "bofeton lodo", "corte furia", "puño dinamico",
-            "puño fuego", "rapidez", "ronquido", "onda ignea", "golpe cabeza", "voto fuego",
-            "cola ferrea", "enfado", "puño trueno", "pulso dragon", "puño certero",
+            "Lanzallamas", "Avalancha", "Contraataque", "Danza espada", "Doble filo", "Golpe cuerpo", "Megapuño", "Megapatada", "Mimético",
+            "Sísmico", "Sustituto", "Aguante", "Bofetón lodo", "Contoneo", "Corte furia", "Puño dinámico", "Puño fuego", "Rapidez",
+            "Rizo defensa", "Ronquido", "Sonámbulo", "Onda ígnea", "Golpe cabeza", "Voto fuego", "Cola férrea", "Enfado", "Puño trueno",
+            "Pulso dragón", "Puño certero",
         ].map(e => {
             return { name: e, category: "tutor" }
         }),
         // Egg
-        { name: "poder pasado", parents: [
-            "cranidos", "shieldon", "tyrunt", "amaura", "lapras",
-        ] },
-        { name: "avalancha", parents: ["larvitar"] },
-        { name: "mordisco", parents: [
-            "squirtle", "ekans", "gyarados", "snorlax", "totodile", "larvitar", "loudred",
-            "seviper", "trapinch", "bagon", "turtwig", "axew", "druddigon", "deino",
-            "tyrunt", "bergmite", "noibat", "chewtle", "dreepy", "frigibay",
-        ] },
-        { name: "paliza", parents: [ "nidoran♂", "sneasel", "houndour", "smeargle" ] },
-        { name: "enfado", parents: [
-            "dratini", "axew", "druddigon", "deino", "goodra", "drampa", "jangmo-o",
-        ] },
-        { name: "triturar", parents: [
-            "dratini", "vibrava", "gible", "deino", "flapple", "drakloak",
-        ] },
-        { name: "envite igneo", parents: ["charizard", "alolan marowak"] },
-        { name: "garra metal", parents: ["aron", "duraludon"] },
-        { name: "contraataque", parents: ["chewtle"] },
-        { name: "puño certero", parents: ["scraggy"] },
-        { name: "pulso dragon", parents: [
-            "horsea", "ampharos", "swablu", "axew", "deino", "skrelp", "goomy", "salandit",
-            "turtonator", "drampa",
-        ] },
-        { name: "aire afilado", parents: [
-            "charizard", "dragonite", "swablu", "tropius", "salamence",
-        ] },
-        { name: "ataque ala", parents: ["noibat", "flapple"] },
-        { name: "cola dragon", parents: [
-            "dratini", "vibrava", "salamence", "milotic", "jangmo-o", "duraludon", "frigibax",
-        ] },
-        { name: "cola ferrea", parents: ["hisui goodra"] },
+        ...[
+            { "name": "Tambor", "parents": ["Snorlax", "Kommo-o"] },
+            { "name": "Poder pasado", "parents": ["Cranidos", "Shieldon", "Tyrunt", "Amaura", "Lapras"] },
+            { "name": "Avalancha", "parents": ["Larvitar"] },
+            { "name": "Mordisco", "parents": ["Squirtle", "Ekans", "Gyarados", "Snorlax", "Totodile", "Larvitar", "Loudred", "Seviper", "Trapinch", "Bagon", "Turtwig", "Axew", "Druddigon", "Deino", "Tyrunt", "Bergmite", "Noibat", "Chewtle", "Dreepy", "Frigibax"] },
+            { "name": "Paliza", "parents": ["Nidoran♂", "Sneasel", "Houndour", "Smeargle"] },
+            { "name": "Enfado", "parents": ["Dratini", "Axew", "Druddigon", "Deino", "Goodra", "Drampa", "Jangmo-o"] },
+            { "name": "Danza espada", "parents": ["Rhyhorn", "Raticate", "Farfetch'd", "Zangoose", "Absol", "Empoleon", "Lucario", "Smeargle"] },
+            { "name": "Danza dragón", "parents": ["Horsea", "Gyarados", "Dratini", "Altaria", "Axew", "Jangmo-o"] },
+            { "name": "Triturar", "parents": ["Arbok", "Gyarados", "Snorlax", "Totodile", "Larvitar", "Exploud", "Seviper", "Bagon", "Turtwig", "Garchomp", "Scraggy", "Druddigon", "Deino", "Tyrunt", "Avalugg"] },
+            { "name": "Carga dragón", "parents": ["Dratini", "Vibrava", "Gible", "Deino", "Flapple", "Drakloak"] },
+            { "name": "Envite ígneo", "parents": ["Charizard", "Marowak de Alola"] },
+            { "name": "Garra metal", "parents": ["Aron", "Duraludon"] },
+            { "name": "Contraataque", "parents": ["Chewtle"] },
+            { "name": "Puño certero", "parents": ["Scraggy"] },
+            { "name": "Pulso dragón", "parents": ["Horsea", "Ampharos", "Swablu", "Axew", "Deino", "Skrelp", "Goomy", "Salandit", "Turtonator", "Drampa"] },
+            { "name": "Aire afilado", "parents": ["Charizard", "Dragonite", "Swablu", "Tropius", "Salamence"] },
+            { "name": "Ataque ala", "parents": ["Noibat", "Flapple"] },
+            { "name": "Cola dragón", "parents": ["Dratini", "Vibrava", "Salamence", "Milotic", "Jangmo-o", "Duraludon", "Frigibax"] },
+            { "name": "Cola férrea", "parents": ["Goodra de Hisui"] }
+        ].map(e => {
+            e.category = "huevo"
+            return e
+        }),
         // Special
         ...[
-            "triturar", "acrobata", "falso tortazo", "anillo igneo",
+            "Triturar", "Acróbata", "Falso tortazo", "Anillo ígneo",
         ].map(e => {
-            return { name: e, category: "special" }
+            return { name: e, category: "especial" }
         }),
     ],
 }

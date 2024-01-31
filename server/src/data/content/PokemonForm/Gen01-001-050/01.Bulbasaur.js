@@ -15,64 +15,58 @@ module.exports = {
     ],
     movements: [
         // Level
-        { name: "Placaje" },
-        { name: "Látigo cepa", level: 3 },
-        { name: "Hoja afilada", level: 12 },
-        { name: "bomba germen", level: 18 },
-        { name: "derribo", level: 21 },
-        { name: "latigazo", level: 33 },
-        { name: "rayo solar", level: 26 },
+        { name: "Placaje" }, { name: "Gruñido" }, { name: "Látigo cepa", level: 3 },
+        { name: "Desarrollo", level: 6 }, { name: "Drenadoras", level: 9 }, { name: "Hoja afilada", level: 12 },
+        { name: "Polvo veneno", level: 15 }, { name: "Somnífero", level: 15 }, { name: "Bomba germen", level: 18 },
+        { name: "Derribo", level: 21 }, { name: "Dulce aroma", level: 24 }, { name: "Síntesis", level: 27 },
+        { name: "Abatidoras", level: 30 }, { name: "Latigazo", level: 33 }, { name: "Rayo solar", level: 36 },        
         // MT
         ...[
-            "derribo", "bomba acida", "abrecaminos", "imagen", "hoja magica",
-            "carga toxica", "semilladora", "falso tortazo", "golpe cuerpo",
-            "bomba germen", "hierba lazo", "gigadrenado", "energibola", "voto planta",
-            "bomba lodo", "lluevehojas", "rayo solar", "teraexplosion", "toxico",
-            "desarme", "meteorobola", "fitoimpulso", "doble filo",
+            "Derribo", "Encanto", "Protección", "Bomba ácida", "Abrecaminos", "Imagen", "Hoja mágica", "Carga tóxica", "Aguante",
+            "Día soleado", "Semilladora", "Falso tortazo", "Golpe cuerpo", "Sonámbulo", "Bomba germen", "Hierba lazo", "Descanso",
+            "Danza espada", "Sustituto", "Gigadrenado", "Energibola", "Refuerzo", "Campo de hierba", "Voto planta", "Bomba lodo",
+            "Lluevehojas", "Rayo solar", "Teraexplosión", "Tóxico", "Desarme", "Meteorobola", "Fitoimpulso", "Doble filo", "Maldición",
         ].map(e => {
-            return { name: e, category: "machine" }
+            return { name: e, category: "maquina" }
         }),
         // Tutor
         ...[
-            "doble filo", "golpe cuerpo", "bofeton lodo", "corte furia", "ronquido",
-            "bomba germen", "desarme", "golpe cabeza", "voto planta", "atadura",
-            "gigadrenado", "fitoimpulso",
+            "Danza espada", "Doble filo", "Golpe cuerpo", "Mimético", "Sustituto", "Aguante", "Bofetón lodo", "Contoneo", "Corte furia",
+            "Rizo defensa", "Ronquido", "Sonámbulo", "Bomba germen", "Desarme", "Síntesis", "Abatidoras", "Disparo demora", "Golpe cabeza",
+            "Voto planta", "Atadura", "Gigadrenado", "Fitoimpulso",
         ].map(e => {
             return { name: e, category: "tutor" }
         }),
         // Egg
         ...[
-            { name: "viento cortante", parents: ["totodile"] },
-            { name: "cabezazo", parents: ["squirtle", "avalugg"] },
-            { name: "danza petalo", parents: [
-                "venusaur", "oddish", "sunflora", "roselia", "meganium", "cherrim",
-                "maractus", "comfey",
-            ] },
-            { name: "hoja magica", parents: [
-                "bellosom", "roselia", "troipus", "chikorita", "cherubi", "comfey",
-            ] },
-            { name: "lluevehojas", parents: [
-                "victreebel", "exeggutor", "alolan exeggutor", "bellosom", "sunflora",
-                "grovyle", "shiftry", "tropius", "turtwig", "snivy",
-            ] },
-            { name: "residuos", parents: [ "mudkip", "marshtomp", "swampert" ] },
-            { name: "latigazo", parents: [
-                "lickitung", "tangela", "carnivine", "ferrothorn",
-            ] },
-            { name: "gigadrenado", parents: [
-                "oddish", "paras", "tangela", "hoppip", "sunkern", "treecko",
-                "shroomish", "roselia", "turtwig", "snivy", "cottonee", "maractus",
-                "foongus",
-            ] },
+            { "name": "Viento cortante", "parents": ["Totodile"] },
+            { "name": "Pantalla de luz", "parents": ["Pikachu", "Chikorita", "Mareep"] },
+            { "name": "Velo sagrado", "parents": ["Lapras", "Chikorita"] },
+            { "name": "Cabezazo", "parents": ["Squirtle", "Avalugg"] },
+            { "name": "Danza pétalo", "parents": ["Venusaur", "Oddish", "Sunflora", "Roselia", "Meganium", "Cherrim", "Maractus", "Comfey"] },
+            { "name": "Encanto", "parents": ["Cottonee", "Tyrunt"] },
+            { "name": "Hoja mágica", "parents": ["Bellossom", "Roselia", "Tropius", "Chikorita", "Cherubi", "Comfey"] },
+            { "name": "Maldición", "parents": ["Slowpoke", "Slowpoke de Galar", "Turtwig", "Ferroseed", "Phantump", "Bergmite", "Appletun"] },
+            { "name": "Silbato", "parents": ["Roselia", "Sunkern", "Snover"] },
+            { "name": "Amnesia", "parents": ["Slowpoke", "Snorlax"] },
+            { "name": "Adaptación", "parents": ["Lotad", "Seedot", "Amaura"] },
+            { "name": "Arraigo", "parents": ["Tangela", "Sunkern", "Roselia", "Cacnea", "Carnivine", "Snover", "Maractus", "Foongus", "Ferroseed", "Phantump", "Fomantis", "Morelull"] },
+            { "name": "Lluevehojas", "parents": ["Victreebel", "Exeggutor", "Exeggutor de Alola", "Bellossom", "Sunflora", "Grovyle", "Shiftry", "Tropius", "Turtwig", "Snivy"] },
+            { "name": "Residuos", "parents": ["Mudkip"] },
+            { "name": "Latigazo", "parents": ["Lickitung", "Tangela", "Carnivine", "Ferrothorn"] },
+            { "name": "Gigadrenado", "parents": ["Oddish", "Paras", "Tangela", "Hoppip", "Sunkern", "Treecko", "Shroomish", "Roselia", "Turtwig", "Snivy", "Cottonee", "Maractus", "Foongus"] },
+            { "name": "Aguante", "parents": ["Shieldon", "Turtonator"] },
+            { "name": "Campo de hierba", "parents": ["Oddish", "Tangela", "Roserade", "Comfey"] },
+            { "name": "Tóxico", "parents": ["Oddish", "Roselia", "Salandit"] }
         ].map(e => {
-            e.category = "egg"
+            e.category = "huevo"
             return e
         }),
         // Special
         ...[
-            "poder pasado", "falsotortazo", "planta feroz", "meteorobola",
+            "Poder pasado", "Falso tortazo", "Planta feroz", "Meteorobola",
         ].map(e => {
-            return { name: e, category: "special" }
+            return { name: e, category: "especial" }
         }),
     ],
 }

@@ -21,7 +21,6 @@ module.exports = new Command({
         let id = props.args.join(" ")
         let data = (await axios.get({ url: `move/${id}` })).data
 
-        console.log(data)
         if (!data) return message.react('❓')
 
         let description = []

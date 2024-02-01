@@ -1,5 +1,6 @@
 module.exports = {
     name: "Mega Venusaur",
+    specie: "Venusaur",
     types: ["Planta", "Veneno"],
     pre_evolution: "Venusaur",
     isMega: true,

@@ -1,5 +1,6 @@
 module.exports = {
     name: "Mega Charizard X",
+    specie: "Charizard",
     types: ["Fuego", "Dragón"],
     pre_evolution: "Charizard",
     isMega: true,

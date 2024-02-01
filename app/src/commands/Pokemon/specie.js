@@ -1,7 +1,7 @@
 const Command = require('../../class/Command')
-const createEmbed = require('../../utils/createEmbed')
 
 const { axios } = require('../../services')
+const { createEmbed } = require('../../utils')
 
 module.exports = new Command({
     name: "specie",

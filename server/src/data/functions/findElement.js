@@ -1,6 +1,7 @@
 const chargeData = require('./chargeData')
-const checkWord = require('../../utils/checkWord')
 const Class = require('../../class')
+
+const { checkWord } = require('../../utils')
 
 module.exports = (db, id) => {
 

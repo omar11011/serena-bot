@@ -1,4 +1,4 @@
-const response = require('../../utils/response')
+const { response } = require('../../utils')
 const findKey = require('../../data/functions/findKey')
 const findElement = require('../../data/functions/findElement')
 

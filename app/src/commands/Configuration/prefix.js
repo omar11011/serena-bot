@@ -1,5 +1,5 @@
 const Command = require('../../class/Command')
-const createEmbed = require('../../utils/createEmbed')
+const { createEmbed } = require('../../utils')
 
 const megadb = require('megadb')
 const db = new megadb.crearDB('prefix', 'config')

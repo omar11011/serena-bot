@@ -1,6 +1,6 @@
 const Command = require('../../class/Command')
-const createEmbed = require("../../utils/createEmbed")
-const convertTime = require("../../utils/convertTime")
+
+const { createEmbed, convertTime } = require("../../utils")
 
 module.exports = new Command({
     name: "help",

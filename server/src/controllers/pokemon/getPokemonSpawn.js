@@ -1,4 +1,4 @@
-const response = require('../../utils/response')
+const { response } = require('../../utils')
 const Form = require('../../class/PokemonForm')
 const findKey = require('../../data/functions/findKey')
 

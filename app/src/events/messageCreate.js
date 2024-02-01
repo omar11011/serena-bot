@@ -1,8 +1,7 @@
 const { Events } = require('discord.js')
 const { megadb, colors, axios } = require('../services')
 const { nekotina } = require('../bots')
-
-const checkCommandOptions = require('../utils/checkCommandOptions')
+const { checkCommandOptions } = require('../utils')
 
 module.exports = {
 	name: Events.MessageCreate,
@@ -26,6 +25,8 @@ module.exports = {
         }
         
         if (!message.content.startsWith(props.prefix)) {
+            if (message.mentions.users.has(message.client.user.id)) return message.reply(`${message.author.username}, mi prefijo en el servidor es: ` + '`' + props.prefix +'`')
+
             // Experiencia por escribir
             if (message.content.length > 5) {
                 const prob = Math.ceil(Math.random() * 100)

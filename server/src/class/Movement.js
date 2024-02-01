@@ -1,4 +1,4 @@
-const checkBoolean = require('../utils/checkBoolean')
+const { checkBoolean } = require('../utils')
 
 module.exports = class Movement {
 

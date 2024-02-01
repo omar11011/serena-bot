@@ -1,5 +1,5 @@
 const { Anime } = require('../../models')
-const response = require('../../utils/response')
+const { response } = require('../../utils')
 
 module.exports = async (req, res) => {
     const typeCharacter = req.params.character.toLowerCase()

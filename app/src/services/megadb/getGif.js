@@ -1,8 +1,8 @@
+const { createEmbed } = require('../../utils')
 const { imgURL } = require('../../bots/nekotina/config.json')
 
 const megadb = require('megadb')
 const logMsg = require('../colors/logMsg')
-const createEmbed = require('../../utils/createEmbed')
 
 module.exports = async ({ message, userId, command, msgs }) => {
 

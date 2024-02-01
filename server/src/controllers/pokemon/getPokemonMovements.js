@@ -1,4 +1,4 @@
-const response = require('../../utils/response')
+const { response } = require('../../utils')
 const findElement = require('../../data/functions/findElement')
 
 module.exports = async (req, res) => {

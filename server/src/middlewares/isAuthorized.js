@@ -1,4 +1,4 @@
-const response = require("../utils/response")
+const { response } = require("../utils")
 
 module.exports = (req, res, next) => {
     const { apiKey } = req.body

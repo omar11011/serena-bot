@@ -1,5 +1,5 @@
 const Command = require('../../class/Command')
-const createEmbed = require('../../utils/createEmbed')
+const { createEmbed } = require('../../utils')
 
 module.exports = new Command({
     name: "avatar",
@@ -9,7 +9,7 @@ module.exports = new Command({
         const user = props.mention
         
         return createEmbed(message, {
-            color: 'deepPink',
+            color: 'random',
             author: null,
             title: `Avatar de ${user.globalName || user.username}`,
             image: user.displayAvatarURL({ size: 1024, dynamic: true })

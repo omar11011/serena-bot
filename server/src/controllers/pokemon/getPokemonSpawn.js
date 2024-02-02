@@ -1,6 +1,7 @@
 const { response } = require('../../utils')
 const Form = require('../../class/PokemonForm')
 const findKey = require('../../data/functions/findKey')
+const findElement = require('../../data/functions/findElement')
 
 const megadb = require('megadb')
 const db = new megadb.crearDB('spawn')
@@ -19,12 +20,16 @@ module.exports = async (req, res) => {
     let species = await db.obtener(opt)
 
     if (species) {
-        let specie = species[Math.floor(Math.random() * species.length)]
-        let forms = findKey('PokemonForm', 'name', specie).map(e => new Form(e)).filter(e => !e.isMega && !e.isGiga)
+        let Specie = species[Math.floor(Math.random() * species.length)]
+        let forms = findKey('PokemonForm', 'name', Specie).map(e => new Form(e)).filter(e => !e.isMega && !e.isGiga)
         
         if (forms.length > 0) {
-            let { id, name, region, types, images } = forms[Math.floor(Math.random() * forms.length)]
-            pokemon = { id, name, region, types, images, specie }
+            let prob = Math.ceil(Math.random() * 100)
+            let { gender } = findElement('PokemonSpecie', Specie)
+            let { name, specie, types, stats, images } = forms[Math.floor(Math.random() * forms.length)]
+
+            pokemon = { name, specie, types, stats, images }
+            pokemon.gender = gender.male === 0 && gender.female === 0 ? 'none' : prob < gender.male ? 'male' : 'female'
         }
     }
 

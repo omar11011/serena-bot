@@ -1,6 +1,6 @@
 const Command = require('../../class/Command')
-
-const { createEmbed, convertTime } = require("../../utils")
+const createEmbed = require('../../utils/createEmbed')
+const convertTime = require('../../utils/convertTime')
 
 module.exports = new Command({
     name: "help",
@@ -14,23 +14,29 @@ module.exports = new Command({
             let command = commands.find(e => e.name === nameCommand || e.alias.includes(nameCommand))
 
             if (!command) {
-                return createEmbed(message, {
-                    color: "red",
-                    description: `🚫 There is no command with that name/alias.`,
+                return createEmbed({
+                    message,
+                    data: {
+                        color: "red",
+                        description: `🚫 There is no command with that name/alias.`,
+                    }
                 })
             }
 
-            return createEmbed(message, {
-                color: "luminousVividPink",
-                title: `Command: ${command.name}`,
-                description: command.description,
-                fields: [
-                    { name: "Category", value: command.category, inline: true },
-                    { name: "Enabled", value: command.enabled ? "Yes" : "No", inline: true },
-                    { name: "Cooldown", value: convertTime(command.cooldown), inline: true },
-                    { name: "Arguments", value: command.args.length > 0 ? `[${command.args.join("] [")}]` : "None", inline: true },
-                    { name: "Alias", value: command.alias.length > 0 ? command.alias.join(", ") : "None", inline: true },
-                ],
+            return createEmbed({
+                message,
+                data: {
+                    color: "luminousVividPink",
+                    title: `Command: ${command.name}`,
+                    description: command.description,
+                    fields: [
+                        { name: "Category", value: command.category, inline: true },
+                        { name: "Enabled", value: command.enabled ? "Yes" : "No", inline: true },
+                        { name: "Cooldown", value: convertTime(command.cooldown), inline: true },
+                        { name: "Arguments", value: command.args.length > 0 ? `[${command.args.join("] [")}]` : "None", inline: true },
+                        { name: "Alias", value: command.alias.length > 0 ? command.alias.join(", ") : "None", inline: true },
+                    ],
+                }
             })
         }
         
@@ -47,10 +53,13 @@ module.exports = new Command({
 
         Object.keys(groupedData).map(e => description += "\n**" + e + ":** `" + groupedData[e].map(f => f.name).join("`, `") + "`\n")
 
-        return createEmbed(message, {
-            title: "My commands",
-            description: description,
-            footer: `See more information about some command using ${props.prefix}help <command>`
+        return createEmbed({
+            message,
+            data: {
+                title: "My commands",
+                description: description,
+                footer: `See more information about some command using ${props.prefix}help <command>`
+            }
         })
 	},
 })

@@ -1,7 +1,7 @@
 const Command = require('../../class/Command')
 
 const { axios } = require('../../services')
-const { createEmbed } = require('../../utils')
+const createEmbed = require('../../utils/createEmbed')
 
 module.exports = new Command({
     name: "balance",
@@ -14,8 +14,11 @@ module.exports = new Command({
         })).data
         let emoji = message.client.emoji
 
-        return createEmbed(message, {
-            description: `${emoji("money")} ${user.balance.money}\n:gem: ${user.balance.gems}`
+        return createEmbed({
+            message,
+            data: {
+                description: `🤑 Actualmente tienes:\n\n${emoji("money")} ${user.balance.money}\n:gem: ${user.balance.gems}`
+            },
         })
 	},
 })

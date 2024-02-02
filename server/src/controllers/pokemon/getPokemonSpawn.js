@@ -23,8 +23,8 @@ module.exports = async (req, res) => {
         let forms = findKey('PokemonForm', 'name', specie).map(e => new Form(e)).filter(e => !e.isMega && !e.isGiga)
         
         if (forms.length > 0) {
-            let { id, name, region, types } = forms[Math.floor(Math.random() * forms.length)]
-            pokemon = { id, name, region, types }
+            let { id, name, region, types, images } = forms[Math.floor(Math.random() * forms.length)]
+            pokemon = { id, name, region, types, images, specie }
         }
     }
 

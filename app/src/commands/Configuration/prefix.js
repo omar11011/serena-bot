@@ -1,8 +1,8 @@
 const Command = require('../../class/Command')
-const { createEmbed } = require('../../utils')
+const createEmbed = require('../../utils/createEmbed')
 
 const megadb = require('megadb')
-const db = new megadb.crearDB('prefix', 'config')
+const db = new megadb.crearDB('prefix', 'server')
 
 module.exports = new Command({
     name: 'prefix',
@@ -14,14 +14,14 @@ module.exports = new Command({
         let prefix = props.prefix
         let newPrefix = props.args[0].toLowerCase()
         let emoji = message.client.emoji
-        let embed = {
+        let data = {
             color: 'darkRed',
             description: `${emoji("error")} El prefijo no puede tener más de dos caracteres.`,
         }
 
         if (newPrefix.length <= 2) {
-            embed.color = 'darkGreen'
-            embed.description = `${emoji("check")} Mi nuevo prefijo en el servidor es **${newPrefix}**`
+            data.color = 'darkGreen'
+            data.description = `${emoji("check")} Mi nuevo prefijo en el servidor es **${newPrefix}**`
 
             if (prefix === process.env.BOT_PREFIX && newPrefix !== process.env.BOT_PREFIX) {
                 await db.establecer(message.guild.id, newPrefix)
@@ -32,6 +32,6 @@ module.exports = new Command({
             }
         }
 
-        return createEmbed(message, embed)
+        return createEmbed({ message, data })
 	},
 })

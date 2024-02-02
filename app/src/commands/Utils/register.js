@@ -1,7 +1,7 @@
 const Command = require('../../class/Command')
+const createEmbed = require('../../utils/createEmbed')
 
 const { axios } = require('../../services')
-const { createEmbed } = require('../../utils')
 
 module.exports = new Command({
     name: "register",
@@ -17,12 +17,15 @@ module.exports = new Command({
 
         const emoji = message.client.emoji
         
-        return createEmbed(message, {
-            color: user.created ? 'darkGreen' : 'darkRed',
-            description:    
-                user.created
-                ? `${emoji("check")} ¡Te has regitrado exitosamente como entrenador pokémon!`
-                : `${emoji("error")} ¡Ups! Ya te habías registrado anteriormente.`
+        return createEmbed({
+            message,
+            data: {
+                color: user.created ? 'darkGreen' : 'darkRed',
+                description:    
+                    user.created
+                    ? `${emoji("check")} ¡Te has regitrado exitosamente como entrenador pokémon!`
+                    : `${emoji("error")} ¡Ups! Ya te habías registrado anteriormente.`
+            }
         })
 	},
 })

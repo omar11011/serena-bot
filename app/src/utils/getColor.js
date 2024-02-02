@@ -8,6 +8,7 @@ const randomColor = () => {
 }
 
 const getColor = name => {
+    name = name.toLowerCase()
     let color = data[name]
     if (!color) color = data[randomColor()]
 

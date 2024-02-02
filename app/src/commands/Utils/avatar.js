@@ -1,5 +1,5 @@
 const Command = require('../../class/Command')
-const { createEmbed } = require('../../utils')
+const createEmbed = require('../../utils/createEmbed')
 
 module.exports = new Command({
     name: "avatar",
@@ -8,11 +8,13 @@ module.exports = new Command({
 	async execute(message, props) {
         const user = props.mention
         
-        return createEmbed(message, {
-            color: 'random',
-            author: null,
-            title: `Avatar de ${user.globalName || user.username}`,
-            image: user.displayAvatarURL({ size: 1024, dynamic: true })
+        return createEmbed({
+            message,
+            data: {
+                color: 'random',
+                title: `Avatar de ${user.globalName || user.username}`,
+                image: user.displayAvatarURL({ size: 1024, dynamic: true })
+            }
         })
 	},
 })

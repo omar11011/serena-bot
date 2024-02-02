@@ -1,52 +1,49 @@
 const getColor = require("./getColor")
 
-module.exports = function createEmbed(message, props, obj = false) {
+module.exports = props => {
 
-    const embed = {
-        color: getColor('blue').int,
-        author: {
-            name: message.author.username,
-            icon_url: message.author.displayAvatarURL({ size: 256, dynamic: true }),
-        },
-    }
-    
-    // Color
-    if (props.color) embed.color = getColor(props.color).int
+    let { message, data, obj } = props
+    if (!obj) obj = false
+
+    let embed = { color: getColor(data.color ? data.color : 'random').int }
 
     // Title
-    if (props.title) embed.title = String(props.title)
+    if (data.title) embed.title = String(data.title)
 
     // URL
-    if (props.url) embed.url = String(props.url)
+    if (data.url) embed.url = String(data.url)
 
     // Author
-    if (props.author === null) delete embed.author
-    if (props.author) {
-        embed.author.name = String(props.author)
-        delete embed.author.icon_url
+    if (data.author) {
+        embed.author = {}
+
+        if (typeof data.author === 'string') embed.author.name = String(data.author)
+        else if (typeof data.author === 'object') embed.author = data.author
+
+        if (Object.keys(embed.author).length < 1) delete embed.author
     }
 
     // Description
-    if (props.description) embed.description = String(props.description)
+    if (data.description) embed.description = String(data.description)
 
     // Thumbnail
-    if (props.thumbnail) embed.thumbnail = {
-        url: props.thumbnail,
+    if (data.thumbnail) embed.thumbnail = {
+        url: data.thumbnail,
     }
 
     // Fields
-    if (props.fields) embed.fields = props.fields
+    if (data.fields) embed.fields = data.fields
 
     // Image
-    if (props.image) embed.image = {
-        url: props.image,
+    if (data.image) embed.image = {
+        url: data.image,
     }
 
     // Footer
-    if (props.footer) embed.footer = {
-        text: props.footer,
+    if (data.footer) embed.footer = {
+        text: data.footer,
     }
-
+    
     if (obj) return embed
     else return message.reply({ embeds: [ embed ] })
 

@@ -1,5 +1,5 @@
 const megadb = require('megadb')
-const db = new megadb.crearDB('prefix', 'config')
+const db = new megadb.crearDB('prefix', 'server')
 
 module.exports = async server => {
 

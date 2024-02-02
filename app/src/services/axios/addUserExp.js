@@ -1,5 +1,4 @@
 const update = require('./update')
-const logMsg = require('../colors/logMsg')
 
 module.exports = async (message, exp, user) => {
 
@@ -11,7 +10,7 @@ module.exports = async (message, exp, user) => {
         },
     })).data
     
-    if (result.error) return logMsg(result.error, 'r')
+    if (!result) return
     if (result.up) return message.reply(`¡Felicidades! Has alcanzado el nivel *${result.level}*.`)
 
 }

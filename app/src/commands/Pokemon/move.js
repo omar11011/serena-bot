@@ -1,7 +1,7 @@
 const Command = require('../../class/Command')
+const createEmbed = require('../../utils/createEmbed')
 
 const { axios } = require('../../services')
-const { createEmbed } = require('../../utils')
 
 const stats = {
     'hp': 'salud',
@@ -45,19 +45,22 @@ module.exports = new Command({
             })
         }
 
-        return createEmbed(message, {
-            color: data.type,
-            author: data.name,
-            description: description.join('\n'),
-            fields: [
-                { name: 'Clase', value: data.class ? data.class : 'Ninguno', inline: true },
-                { name: 'Tipo', value: data.type, inline: true },
-                { name: 'Prioridad', value: String(data.priority), inline: true },
-                { name: 'Potencia', value: String(data.power || '-'), inline: true },
-                { name: 'Precisión', value: String(data.precision) + '%', inline: true, },
-                { name: 'Golpes', value: String(data.hits), inline: true },
-            ],
-            footer: `ID Global: ${data.id}`,
+        return createEmbed({
+            message, 
+            data: {
+                color: data.type,
+                author: data.name,
+                description: description.join('\n'),
+                fields: [
+                    { name: 'Clase', value: data.class ? data.class : 'Ninguno', inline: true },
+                    { name: 'Tipo', value: data.type, inline: true },
+                    { name: 'Prioridad', value: String(data.priority), inline: true },
+                    { name: 'Potencia', value: String(data.power || '-'), inline: true },
+                    { name: 'Precisión', value: String(data.precision) + '%', inline: true, },
+                    { name: 'Golpes', value: String(data.hits), inline: true },
+                ],
+                footer: `ID Global: ${data.id}`,
+            }
         })
 	},
 })

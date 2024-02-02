@@ -26,4 +26,5 @@ module.exports = async (cmd, user) => {
     }
 
     return result
+    
 }

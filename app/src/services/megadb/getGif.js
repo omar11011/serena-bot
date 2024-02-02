@@ -1,6 +1,6 @@
-const { createEmbed } = require('../../utils')
 const { imgURL } = require('../../bots/nekotina/config.json')
 
+const createEmbed = require('../../utils/createEmbed')
 const megadb = require('megadb')
 const logMsg = require('../colors/logMsg')
 
@@ -11,7 +11,6 @@ module.exports = async ({ message, userId, command, msgs }) => {
 
     if (!gifs) return createEmbed(message, {
         color: 'red',
-        author: null,
         description: '😦 No tengo suficientes gifs para mostrar en este momento.',
     })
 
@@ -26,11 +25,13 @@ module.exports = async ({ message, userId, command, msgs }) => {
     else msg = '...'
     
     try {
-        return createEmbed(message, {
-            color: 'random',
-            author: null,
-            description: msg,
-            image: imgURL + gif,
+        return createEmbed({
+            message,
+            data: {
+                color: 'random',
+                description: msg,
+                image: imgURL + gif,
+            }
         })
     }
     catch {

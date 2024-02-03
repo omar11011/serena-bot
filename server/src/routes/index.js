@@ -19,6 +19,7 @@ router.get('/move/:id', async (req, res) => await controller.getMovement(req, re
 router.get('/spawn', async (req, res) => await controller.getPokemonSpawn(req, res))
 
 // Capture
+router.get('/capture/:user', async (req, res) => await controller.getCaptures(req, res))
 router.post('/capture', isAuthorized, async (req, res) => await controller.addCapture(req, res))
 
 // Gif

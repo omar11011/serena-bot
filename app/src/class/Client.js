@@ -17,7 +17,7 @@ client.emoji = emoji => {
     emoji = emojis[emoji].split(':')
     emoji = emoji[emoji.length - 1].replace('>', '')
 
-    return client.emojis.cache.get(emoji)
+    return client.emojis.cache.get(emoji) || ''
 }
 
 module.exports = client

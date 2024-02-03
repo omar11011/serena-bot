@@ -32,6 +32,8 @@ module.exports = mongoose.model('Capture', new mongoose.Schema(
         gender: { type: String, default: 'none' },
         stats: { type: statSchema, default: {} },
         movements: { type: [moveSchema], default: null },
+        favorite: { type: Boolean, default: false },
+        select: { type: Boolean, default: false },
     },
     {
         timestamps: true,

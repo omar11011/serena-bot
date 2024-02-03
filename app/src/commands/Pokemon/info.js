@@ -15,6 +15,7 @@ const stats = {
 module.exports = new Command({
     name: "info",
     description: "Muestra información de un pokémon que has capturado.",
+    cooldown: 4,
 	async execute(message, props) {
         let queries = []
         let url = `capture/${message.author.id}?`
@@ -30,8 +31,8 @@ module.exports = new Command({
         url += queries.join('&')
 
         let data = (await axios.get({ url })).data
-        if (Array.isArray(data) && data.length < 1) return message.react('🧐')
-
+        if (data.list && data.list.length < 1) return message.react('🧐')
+        
         let { types, images } = (await axios.get({ url: `pokemon/form/${data.pokemon.name}` })).data
 
         return createEmbed({

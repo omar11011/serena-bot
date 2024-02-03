@@ -4,6 +4,7 @@ const pokemonSchema = new mongoose.Schema({
     _id: false,
     name: String,
     specie: String,
+    alias: String,
 })
 
 const statSchema = new mongoose.Schema({

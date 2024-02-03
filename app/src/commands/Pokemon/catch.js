@@ -8,6 +8,7 @@ module.exports = new Command({
     name: "catch",
     description: "Atrapa los Pokémon salvajes que aparecen en los canales de spawn.",
     args: ['name'],
+    cooldown: 4,
 	async execute(message, props) {
         let emoji = message.client.emoji
         let response = checkWord(props.args.join(' ').toLowerCase())

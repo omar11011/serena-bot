@@ -4,21 +4,14 @@ const { axios } = require('../../services')
 const createEmbed = require('../../utils/createEmbed')
 
 module.exports = new Command({
-    name: "addmarket",
-    alias: ["addm"],
-    description: "Agrega uno de tus Pokémon al mercado.",
+    name: "releasemarket",
+    alias: ["relm"],
+    description: "Elimina a uno de tus Pokémon del mercado.",
     cooldown: 4,
-    args: ['id', 'precio'],
+    args: ['id'],
 	async execute(message, props) {
         let id = props.args[0]
-        let price = props.args[1]
-
-        if (isNaN(id) || parseInt(id) < 1 || isNaN(price) || parseInt(price) < 1) {
-            return createEmbed({
-                message,
-                data: { color: 'red', description: 'El ID o precio que has ingresado no es válido.' },
-            })
-        }
+        if (isNaN(id) || parseInt(id) < 1) return message.react('❌')
         
         let data = (await axios.get({ url: `capture/${message.author.id}?skip=${parseInt(id) - 1}` })).data
         if (data.list && data.list.length < 1) return message.react('🧐')
@@ -27,7 +20,7 @@ module.exports = new Command({
             url: 'capture',
             props: {
                 _id: data._id,
-                marketPrice: parseInt(price),
+                marketPrice: null,
             },
         })
 
@@ -35,7 +28,7 @@ module.exports = new Command({
             message,
             data: {
                 color: 'green',
-                description: `Has añadido a ${data.shiny ? '⭐ ' : ''}**${data.pokemon.alias || data.pokemon.name}** al mercado por un precio de **${price}** Pokémonedas 🤑`,
+                description: `Has retirado a ${data.shiny ? '⭐ ' : ''}**${data.pokemon.alias || data.pokemon.name}** del mercado 🤗 `,
             },
         })
 	},

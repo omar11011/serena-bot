@@ -12,10 +12,10 @@ module.exports = new Command({
         let id = props.args[0]
         if (isNaN(id) || parseInt(id) < 1) return message.react('❌')
 
-        let data = (await axios.get({ url: `capture/${message.author.id}?skip=${parseInt(id) - 1}` })).data
+        let data = (await axios.get({ url: `captures/${message.author.id}?skip=${parseInt(id) - 1}` })).data
         if (Array.isArray(data) && data.length < 1) return message.react('🧐')
 
-        let currentPokemon = (await axios.get({ url: `capture/${message.author.id}?select=yes` })).data
+        let currentPokemon = (await axios.get({ url: `captures/${message.author.id}?select=yes` })).data
 
         if (currentPokemon.id && currentPokemon.id === data.id) {
             return createEmbed({

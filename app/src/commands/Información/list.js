@@ -4,7 +4,8 @@ const createEmbed = require('../../utils/createEmbed')
 const { axios } = require('../../services')
 
 module.exports = new Command({
-    name: "list",
+    name: "pokemonlist",
+    alias: ["plist"],
     description: "Muestra todos los pokémon que has capturado.",
     cooldown: 4,
 	async execute(message, props) {
@@ -12,7 +13,7 @@ module.exports = new Command({
         let emoji = message.client.emoji
         if (props.args.length > 0 && !isNaN(props.args[0]) && parseInt(props.args) > 0) page = props.args[0]
         
-        let data = (await axios.get({ url: `capture/${message.author.id}?page=${page}` })).data
+        let data = (await axios.get({ url: `captures/${message.author.id}?page=${page}` })).data
         
         message.reply({ embeds: [ await sendEmbed(data) ] }).then(msg => {
             const collectorFilter = m => m.author.id === message.author.id
@@ -27,7 +28,7 @@ module.exports = new Command({
                     if (response === 'next') page += 1
                     else page -= 1
 
-                    let newData = (await axios.get({ url: `capture/${message.author.id}?page=${page}` })).data
+                    let newData = (await axios.get({ url: `captures/${message.author.id}?page=${page}` })).data
                     msg.edit({ embeds: [ await sendEmbed(newData) ] })
                 }
                 else m.react('🧐')

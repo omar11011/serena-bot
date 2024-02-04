@@ -20,7 +20,7 @@ module.exports = new Command({
             })
         }
         
-        let data = (await axios.get({ url: `capture/${message.author.id}?skip=${parseInt(id) - 1}` })).data
+        let data = (await axios.get({ url: `captures/${message.author.id}?skip=${parseInt(id) - 1}` })).data
         if (data.list && data.list.length < 1) return message.react('🧐')
 
         await axios.update({

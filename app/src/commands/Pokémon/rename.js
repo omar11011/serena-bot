@@ -21,7 +21,7 @@ module.exports = new Command({
         }
         if (name.includes('⭐')) name = name.replace('⭐', '').trim()
 
-        let data = (await axios.get({ url: `capture/${message.author.id}?select=yes` })).data
+        let data = (await axios.get({ url: `captures/${message.author.id}?select=yes` })).data
         if (data.list && data.list.length < 1) return message.react('🧐')
         
         data.pokemon.alias = name

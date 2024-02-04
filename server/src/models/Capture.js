@@ -9,6 +9,7 @@ const pokemonSchema = new mongoose.Schema({
 
 const statSchema = new mongoose.Schema({
     _id: false,
+    iv: Number,
     hp: { type: Number, default: 5 },
     attack: { type: Number, default: 5 },
     defense: { type: Number, default: 5 },

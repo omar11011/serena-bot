@@ -11,7 +11,7 @@ module.exports = new Command({
         let emoji = message.client.emoji
         if (isNaN(id) || parseInt(id) < 1) return message.react('❌')
 
-        let data = (await axios.get({ url: `capture/${message.author.id}?skip=${parseInt(id) - 1}` })).data
+        let data = (await axios.get({ url: `captures/${message.author.id}?skip=${parseInt(id) - 1}` })).data
         if (Array.isArray(data) && data.length < 1) return message.react('🧐')
 
         message.reply(`¿Estás seguro de querer liberar a ${data.shiny ? '⭐ ' : ''}**${data.pokemon.alias || data.pokemon.name}**? Responde ` + '`yes` par aceptar.')

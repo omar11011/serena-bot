@@ -19,7 +19,8 @@ router.get('/move/:id', async (req, res) => await controller.getMovement(req, re
 router.get('/spawn', async (req, res) => await controller.getPokemonSpawn(req, res))
 
 // Capture
-router.get('/capture/:user', async (req, res) => await controller.getCaptures(req, res))
+router.get('/capture/:id', async (req, res) => await controller.findCaptureById(req, res))
+router.get('/captures/:user', async (req, res) => await controller.getCaptures(req, res))
 router.post('/capture', isAuthorized, async (req, res) => await controller.addCapture(req, res))
 router.put('/capture', isAuthorized, async (req, res) => await controller.updateCapture(req, res))
 

@@ -13,12 +13,13 @@ const stats = {
 }
 
 module.exports = new Command({
-    name: "info",
+    name: "pokemoninfo",
+    alias: ["pinfo"],
     description: "Muestra información de un pokémon que has capturado.",
     cooldown: 4,
 	async execute(message, props) {
         let queries = []
-        let url = `capture/${message.author.id}?`
+        let url = `captures/${message.author.id}?`
 
         if (props.args.length < 1) queries.push(`select=yes`)
         else {
@@ -35,14 +36,23 @@ module.exports = new Command({
         
         let { types, images } = (await axios.get({ url: `pokemon/form/${data.pokemon.name}` })).data
 
+        let description = [
+            `**IV:** ${data.stats.iv}%`,
+            `**Nivel:** ${data.level}`,
+            `**Experiencia:** ${data.xp}/${data.level * 100}`,
+            `**Sexo:** ${['male', 'female'].includes(data.gender) ? ':' + data.gender + '_sign:' : '❌'}`,
+            `${data.marketPrice ? `**Precio:** ${data.marketPrice}` : ''}`,
+            `**Movimientos:** ${data.movements.length > 0 ? 'a' : 'Tu pokémon aún no ha aprendido ningún movimiento.'}`,
+        ]
+
         return createEmbed({
             message,
             data: {
                 color: types[0],
                 title: (data.shiny ? '⭐ ' : '') + (data.pokemon.alias || data.pokemon.name),
-                description: `**Sexo:** ${['male', 'female'].includes(data.gender) ? ':' + data.gender + '_sign:' : '❌'}\n**Nivel:** ${data.level}\n**Experiencia:** ${data.xp}/${data.level * 100}${data.marketPrice ? `\n**Precio de mercado:** ${data.marketPrice}` : ''}\n\n**Movimientos:** ${data.movements.length > 0 ? 'a' : 'Tu pokémon aún no ha aprendido ningún movimiento.'}`,
+                description: description.join('\n'),
                 thumbnail: data.shiny ? images.front_shiny : images.front_default,
-                fields: Object.keys(data.stats).map(e => {
+                fields: Object.keys(stats).map(e => {
                     return { name: stats[e], value: data.stats[e] + '/31', inline: true }
                 }),
                 footer: `ID Global: ${data.id}`,

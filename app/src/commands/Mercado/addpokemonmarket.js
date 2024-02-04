@@ -4,8 +4,8 @@ const { axios } = require('../../services')
 const createEmbed = require('../../utils/createEmbed')
 
 module.exports = new Command({
-    name: "addmarket",
-    alias: ["addm"],
+    name: "addpokemonmarket",
+    alias: ["addpm"],
     description: "Agrega uno de tus Pokémon al mercado.",
     cooldown: 4,
     args: ['id', 'precio'],

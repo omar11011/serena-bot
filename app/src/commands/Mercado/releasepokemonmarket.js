@@ -4,8 +4,8 @@ const { axios } = require('../../services')
 const createEmbed = require('../../utils/createEmbed')
 
 module.exports = new Command({
-    name: "releasemarket",
-    alias: ["relm"],
+    name: "releasepokemonmarket",
+    alias: ["relpm"],
     description: "Elimina a uno de tus Pokémon del mercado.",
     cooldown: 4,
     args: ['id'],

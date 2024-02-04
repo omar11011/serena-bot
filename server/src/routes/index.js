@@ -9,6 +9,7 @@ const router = Router()
 // User
 router.post('/user', isAuthorized, async (req, res) => await controller.createUser(req, res))
 router.put('/user-exp', isAuthorized, async (req, res) => await controller.addUserExp(req, res))
+router.put('/user/balance', isAuthorized, async (req, res) => await controller.addBalance(req, res))
 
 // Pokémon
 router.get('/pokemon/form/:id', async (req, res) => await controller.getPokemonForm(req, res))

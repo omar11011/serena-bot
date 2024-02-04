@@ -45,7 +45,7 @@ module.exports = new Command({
                 fields: Object.keys(data.stats).map(e => {
                     return { name: stats[e], value: data.stats[e] + '/31', inline: true }
                 }),
-                footer: `ID Global: ${data._id}`,
+                footer: `ID Global: ${data.id}`,
             },
         })
 	},

@@ -17,7 +17,7 @@ module.exports = new Command({
 
         let currentPokemon = (await axios.get({ url: `capture/${message.author.id}?select=yes` })).data
 
-        if (currentPokemon._id && currentPokemon._id === data._id) {
+        if (currentPokemon.id && currentPokemon.id === data.id) {
             return createEmbed({
                 message,
                 data: {
@@ -31,7 +31,7 @@ module.exports = new Command({
             await axios.update({
                 url: 'capture',
                 props: {
-                    _id: currentPokemon._id,
+                    id: currentPokemon.id,
                     select: false,
                 },
             })
@@ -40,7 +40,7 @@ module.exports = new Command({
         await axios.update({
             url: 'capture',
             props: {
-                _id: data._id,
+                id: data.id,
                 select: true,
             },
         })

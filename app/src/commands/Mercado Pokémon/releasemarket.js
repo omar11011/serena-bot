@@ -19,7 +19,7 @@ module.exports = new Command({
         await axios.update({
             url: 'capture',
             props: {
-                _id: data._id,
+                id: data.id,
                 marketPrice: null,
             },
         })

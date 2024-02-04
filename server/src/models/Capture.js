@@ -25,6 +25,7 @@ const moveSchema = new mongoose.Schema({
 
 module.exports = mongoose.model('Capture', new mongoose.Schema(
     {
+        id: String,
         user: String,
         pokemon: { type: pokemonSchema, default: {} },
         shiny: { type: Boolean, default: false },

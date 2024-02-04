@@ -8,7 +8,7 @@ module.exports = async (req, res) => {
 
     try {
         const data = await User.findOneAndUpdate(
-            { discord_id: user },
+            { user },
             { $inc: { 'stats.exp': exp } },
             { new: true },
         )
@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
         if (newExp >= 0) {
 
             await User.updateOne(
-                { discord_id: user },
+                { user },
                 {
                     $inc: { 'stats.level': 1 },
                     $set: { 'stats.exp': newExp },

@@ -5,8 +5,8 @@ module.exports = async (req, res) => {
     let body = req.body
 
     try {
-        const data = await Capture.updateOne(
-            { _id: body._id },
+        await Capture.updateOne(
+            { id: body.id },
             { $set: body },
         )
         

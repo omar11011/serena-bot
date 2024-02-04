@@ -14,7 +14,8 @@ const balanceSchema = new mongoose.Schema({
 
 module.exports = mongoose.model('User', new mongoose.Schema(
     {
-        discord_id: {
+        id: String,
+        user: {
             type: String,
             required: true,
             unique: true,

@@ -9,7 +9,7 @@ module.exports = new Command({
 	async execute(message, props) {
         let user = await axios.create({
             url: 'user',
-            props: { discord_id: message.author.id },
+            props: { user: message.author.id },
         })
 
         if (user.error) return

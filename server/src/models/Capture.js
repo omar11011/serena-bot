@@ -35,6 +35,7 @@ module.exports = mongoose.model('Capture', new mongoose.Schema(
         movements: { type: [moveSchema], default: null },
         favorite: { type: Boolean, default: false },
         select: { type: Boolean, default: false },
+        marketPrice: { type: Number, default: null },
     },
     {
         timestamps: true,

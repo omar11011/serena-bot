@@ -28,6 +28,7 @@ module.exports = new Command({
                         user: null,
                         select: false,
                         favorite: false,
+                        priceMarket: null,
                     },
                 })
 

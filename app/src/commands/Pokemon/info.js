@@ -39,7 +39,7 @@ module.exports = new Command({
             message,
             data: {
                 color: types[0],
-                title: (data.shiny ? '⭐ ' : '') + data.pokemon.name,
+                title: (data.shiny ? '⭐ ' : '') + (data.pokemon.alias || data.pokemon.name),
                 description: `Sexo: ${['male', 'female'].includes(data.gender) ? ':' + data.gender + '_sign:' : '❌'}\nNivel: ${data.level}\nExperiencia: ${data.xp}/${data.level * 100}\n\nMovimientos: ${data.movements.length > 0 ? 'a' : 'Tu pokémon aún no ha aprendido ningún movimiento.'}`,
                 thumbnail: data.shiny ? images.front_shiny : images.front_default,
                 fields: Object.keys(data.stats).map(e => {

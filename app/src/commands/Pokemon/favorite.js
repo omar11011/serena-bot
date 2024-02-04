@@ -1,4 +1,5 @@
 const Command = require('../../class/Command')
+const createEmbed = require('../../utils/createEmbed')
 
 const { axios } = require('../../services')
 
@@ -13,7 +14,7 @@ module.exports = new Command({
         if (isNaN(id) || parseInt(id) < 1) return message.react('❌')
 
         let data = (await axios.get({ url: `capture/${message.author.id}?skip=${parseInt(id) - 1}` })).data
-        if (Array.isArray(data) && data.length < 1) return message.react('🧐')
+        if (data.list && data.list.length < 1) return message.react('🧐')
 
         await axios.update({
             url: 'capture',
@@ -23,6 +24,12 @@ module.exports = new Command({
             },
         })
 
-        return message.reply(`Acabas de ${!data.favorite ? 'agregar' : 'retirar'} a ${data.shiny ? '⭐ ' : ''}**${data.pokemon.name}** ${!data.favorite ? 'a' : 'de'} tu lista de favoritos.`)
+        return createEmbed({
+            message,
+            data: {
+                color: 'green',
+                description: `Acabas de ${!data.favorite ? 'agregar' : 'retirar'} a ${data.shiny ? '⭐ ' : ''}**${data.pokemon.alias || data.pokemon.name}** ${!data.favorite ? 'a' : 'de'} tu lista de favoritos.`,
+            },
+        })
 	},
 })

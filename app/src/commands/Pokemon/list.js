@@ -9,6 +9,7 @@ module.exports = new Command({
     cooldown: 4,
 	async execute(message, props) {
         let page = 1
+        let emoji = message.client.emoji
         if (props.args.length > 0 && !isNaN(props.args[0]) && parseInt(props.args) > 0) page = props.args[0]
         
         let data = (await axios.get({ url: `capture/${message.author.id}?page=${page}` })).data
@@ -21,12 +22,15 @@ module.exports = new Command({
                 let response = m.content.toLowerCase()
 
                 if ((response === 'next' && page < data.maxPage) || (response === 'back' && page > 1)) {
+                    m.react(emoji('check'))
+
                     if (response === 'next') page += 1
                     else page -= 1
 
                     let newData = (await axios.get({ url: `capture/${message.author.id}?page=${page}` })).data
                     msg.edit({ embeds: [ await sendEmbed(newData) ] })
                 }
+                else m.react('🧐')
             })
 
             collector.on('end', () => msg.react('⌛'))

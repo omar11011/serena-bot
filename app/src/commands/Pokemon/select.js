@@ -1,4 +1,5 @@
 const Command = require('../../class/Command')
+const createEmbed = require('../../utils/createEmbed')
 
 const { axios } = require('../../services')
 
@@ -16,7 +17,15 @@ module.exports = new Command({
 
         let currentPokemon = (await axios.get({ url: `capture/${message.author.id}?select=yes` })).data
 
-        if (currentPokemon._id && currentPokemon._id === data._id) return message.reply('Ya tienes seleccionado este Pokémon.')
+        if (currentPokemon._id && currentPokemon._id === data._id) {
+            return createEmbed({
+                message,
+                data: {
+                    color: 'red',
+                    description: 'Ya tienes seleccionado este Pokémon.',
+                },
+            })
+        }
 
         if (currentPokemon._id) {
             await axios.update({
@@ -36,6 +45,12 @@ module.exports = new Command({
             },
         })
 
-        return message.reply(`Acabas de seleccionar a ${data.shiny ? '⭐ ' : ''}**${data.pokemon.name}** como tu compañero.`)
+        return createEmbed({
+            message,
+            data: {
+                color: 'green',
+                description: `Acabas de seleccionar a ${data.shiny ? '⭐ ' : ''}**${data.pokemon.alias || data.pokemon.name}** como tu compañero.`,
+            },
+        })
 	},
 })

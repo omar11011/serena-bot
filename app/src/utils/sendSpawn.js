@@ -25,9 +25,9 @@ module.exports = async props => {
             const embed = createEmbed({
                 data: {
                     color: pokemon.types[0],
-                    description: '¿Quién es ese pokémon?',
+                    title: `¡Ha aparecido un Pokémon salvaje!`,
+                    description: `Captura este Pokémon antes que huya usando el comando ${prefix}catch <nombre>`,
                     image: pokemon.images[pokemon.shiny ? 'front_shiny' : 'front_default'],
-                    footer: `Captura este Pokémon antes que huya usando el comando ${prefix}catch <name>`,
                 },
                 obj: true,
             })

@@ -1,7 +1,7 @@
 const megadb = require('megadb')
 const db = new megadb.crearDB('count', 'server')
 
-const limit = 3
+const limit = 20
 
 module.exports = async server => {
 

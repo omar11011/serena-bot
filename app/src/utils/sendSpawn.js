@@ -40,7 +40,7 @@ module.exports = async props => {
 
             // Estableciendo las estadísticas
             Object.keys(pokemon.stats).forEach(e => {
-                pokemon.stats[e] = Math.ceil(Math.random() * 31)
+                pokemon.stats[e] = Math.floor(Math.random() * 32)
             })
             
             // Creando en memoria

@@ -40,7 +40,7 @@ module.exports = new Command({
             data: {
                 color: types[0],
                 title: (data.shiny ? '⭐ ' : '') + (data.pokemon.alias || data.pokemon.name),
-                description: `Sexo: ${['male', 'female'].includes(data.gender) ? ':' + data.gender + '_sign:' : '❌'}\nNivel: ${data.level}\nExperiencia: ${data.xp}/${data.level * 100}\n\nMovimientos: ${data.movements.length > 0 ? 'a' : 'Tu pokémon aún no ha aprendido ningún movimiento.'}`,
+                description: `**Sexo:** ${['male', 'female'].includes(data.gender) ? ':' + data.gender + '_sign:' : '❌'}\n**Nivel:** ${data.level}\n**Experiencia:** ${data.xp}/${data.level * 100}${data.marketPrice ? `\n**Precio de mercado:** ${data.marketPrice}` : ''}\n\n**Movimientos:** ${data.movements.length > 0 ? 'a' : 'Tu pokémon aún no ha aprendido ningún movimiento.'}`,
                 thumbnail: data.shiny ? images.front_shiny : images.front_default,
                 fields: Object.keys(data.stats).map(e => {
                     return { name: stats[e], value: data.stats[e] + '/31', inline: true }

@@ -5,7 +5,7 @@ module.exports = props => {
     let { message, data, obj } = props
     if (!obj) obj = false
 
-    let embed = { color: getColor(data.color ? data.color : 'random').int }
+    let embed = { color: getColor(data.color || 'random').int }
 
     // Title
     if (data.title) embed.title = String(data.title)

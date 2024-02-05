@@ -4,14 +4,13 @@ const createEmbed = require('../../utils/createEmbed')
 const { axios } = require('../../services')
 
 module.exports = new Command({
-    name: "pokemonlist",
-    alias: ["plist"],
+    name: "plist",
     description: "Muestra todos los pokémon que has capturado.",
     cooldown: 4,
 	async execute(message, props) {
         let page = 1
         let emoji = message.client.emoji
-        if (props.args.length > 0 && !isNaN(props.args[0]) && parseInt(props.args) > 0) page = props.args[0]
+        if (props.args.length > 0 && !isNaN(props.args[0]) && parseInt(props.args[0]) > 0) page = props.args[0]
         
         let data = (await axios.get({ url: `captures/${message.author.id}?page=${page}` })).data
         

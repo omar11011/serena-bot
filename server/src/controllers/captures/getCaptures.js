@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
     let { skip, limit, page, sort, select } = req.query
 
     if (skip) skip = isNaN(skip) ? 0 : parseInt(skip)
-    if (limit) skip = isNaN(limit) ? 1 : parseInt(limit)
+    if (limit) limit = isNaN(limit) ? 1 : parseInt(limit)
     if (select) obj.select = true
    
     if (!sort) sort = 1

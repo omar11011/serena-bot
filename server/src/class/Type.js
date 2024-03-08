@@ -1,3 +1,5 @@
+const { getImgURL } = require('../utils')
+
 module.exports = class Type {
 
     constructor(props) {
@@ -5,7 +7,7 @@ module.exports = class Type {
         this.id = props.id
         this.name = props.name
         this.effectiveness = this.checkEffectiveness(props.effectiveness)
-        this.image = props.image || null
+        this.image = getImgURL({ name: props.name, route: 'types'  })
 
     }
 

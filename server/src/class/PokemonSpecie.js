@@ -8,7 +8,6 @@ module.exports = class PokemonSpecie {
         this.name = props.name
         this.pokedex = props.id
         this.gender = this.checkGender(props.gender)
-        this.gender = this.checkGender(props.gender)
         this.eggGroup = this.checkEggGroup(props.eggGroup)
         this.isMythical = checkBoolean(props.isMythical, false)
         this.isLegendary = checkBoolean(props.isLegendary, false)

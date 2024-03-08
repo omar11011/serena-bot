@@ -13,8 +13,7 @@ const stats = {
 }
 
 module.exports = new Command({
-    name: "pokemoninfo",
-    alias: ["pinfo"],
+    name: "info",
     description: "Muestra información de un pokémon que has capturado.",
     cooldown: 4,
 	async execute(message, props) {

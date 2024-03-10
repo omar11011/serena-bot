@@ -15,7 +15,7 @@ module.exports = mongoose.model('PokemonSpecie', new mongoose.Schema(
             unique: true,
         },
         pokedex: Number,
-        gender: { type: genderSchema, default: {} },
+        gender: genderSchema,
         eggGroup: [String],
         isMythical: Boolean,
         isLegendary: Boolean,

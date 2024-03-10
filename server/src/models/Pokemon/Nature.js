@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-module.exports = mongoose.model('Region', new mongoose.Schema(
+module.exports = mongoose.model('PokemonNature', new mongoose.Schema(
     {
         id: Number,
         name: {
@@ -8,7 +8,6 @@ module.exports = mongoose.model('Region', new mongoose.Schema(
             required: true,
             unique: true,
         },
-        image: String,
     },
     {
         timestamps: false,

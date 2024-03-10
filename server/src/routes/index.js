@@ -6,18 +6,17 @@ const isAuthorized = require("../middlewares/isAuthorized")
 const { Router } = require('express')
 const router = Router()
 
-// User
+// Serena
 router.post('/user', isAuthorized, async (req, res) => await controller.createUser(req, res))
-router.put('/user-exp', isAuthorized, async (req, res) => await controller.addUserExp(req, res))
-router.put('/user/balance', isAuthorized, async (req, res) => await controller.addBalance(req, res))
+router.put('/user', isAuthorized, async (req, res) => await controller.updateUser(req, res))
+router.post('/server', isAuthorized, async (req, res) => await controller.createServer(req, res))
+router.put('/server', isAuthorized, async (req, res) => await controller.updateServer(req, res))
 
 // Pokémon
 router.get('/pokemon/form/:id', async (req, res) => await controller.getPokemonForm(req, res))
 router.get('/pokemon/specie/:id', async (req, res) => await controller.getPokemonSpecie(req, res))
-router.get('/pokemon/moves/:id', async (req, res) => await controller.getPokemonMovements(req, res))
-
-router.get('/move/:id', async (req, res) => await controller.getMovement(req, res))
-router.get('/spawn', async (req, res) => await controller.getPokemonSpawn(req, res))
+router.get('/pokemon/movement/:id', async (req, res) => await controller.getPokemonMovement(req, res))
+router.get('/pokemon/spawn', async (req, res) => await controller.generatePokemonSpawn(req, res))
 
 // Capture
 router.get('/capture/:id', async (req, res) => await controller.findCaptureById(req, res))

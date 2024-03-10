@@ -1,4 +1,4 @@
-const { checkBoolean, getImgURL } = require('../utils')
+const { checkBoolean, getImgURL } = require('../../utils')
 
 module.exports = class PokemonSpecie {
 

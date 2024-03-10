@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const statsSchema = new mongoose.Schema({
     _id: false,
     level: { type: Number, default: 1 },
-    exp: { type: Number, default: 0 },
+    xp: { type: Number, default: 0 },
 })
 
 const balanceSchema = new mongoose.Schema({
@@ -12,9 +12,13 @@ const balanceSchema = new mongoose.Schema({
     gems: { type: Number, default: 0 },
 })
 
-module.exports = mongoose.model('User', new mongoose.Schema(
+const trainerSchema = new mongoose.Schema({
+    _id: false,
+    region: String,
+})
+
+module.exports = mongoose.model('SerenaUser', new mongoose.Schema(
     {
-        id: String,
         user: {
             type: String,
             required: true,
@@ -22,6 +26,7 @@ module.exports = mongoose.model('User', new mongoose.Schema(
         },
         stats: { type: statsSchema, default: {} },
         balance: { type: balanceSchema, default: {} },
+        trainer: { type: trainerSchema, default: {} },
     },
     {
         timestamps: true,

@@ -10,14 +10,16 @@ module.exports = new Command({
 	async execute(message, props) {
         let money = 5 + Math.floor(Math.random() * 11)
         let inc = (await axios.update({
-            url: 'user/balance',
+            url: 'user',
             props: {
                 user: message.author.id,
-                'balance.money': money,
+                inc: {
+                    "balance.money": money,
+                },
             },
         })).data
 
-        if (inc.modifiedCount < 1) {
+        if (!inc) {
             await axios.create({
                 url: 'user',
                 props: {

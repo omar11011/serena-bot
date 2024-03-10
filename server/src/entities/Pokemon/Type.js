@@ -1,4 +1,4 @@
-const { getImgURL } = require('../utils')
+const { getImgURL } = require('../../utils')
 
 module.exports = class Type {
 

@@ -1,16 +1,28 @@
 const update = require('./update')
 
-module.exports = async (message, exp, user) => {
+module.exports = async (message, xp, user) => {
 
-    const result = (await update({
-        url: 'user-exp',
+    let up = (await update({
+        url: 'user',
         props: {
             user: user ? user : message.author.id,
-            exp: exp,
+            inc: { 'stats.xp': xp },
         },
     })).data
     
-    if (!result) return
-    if (result.up) return message.reply(`¡Felicidades! Has alcanzado el nivel *${result.level}*.`)
+    if (up && up.stats.xp > up.stats.level * 100) {
+        xp = up.stats.xp - up.stats.level * 100
+
+        await update({
+            url: 'user',
+            props: {
+                user: up.user,
+                set: { 'stats.xp': xp },
+                inc: { 'stats.level': 1 },
+            },
+        })
+
+        if (!user) return message.reply(`¡Felicidades! Has alcanzado el nivel *${up.stats.level + 1}*.`)
+    }
 
 }

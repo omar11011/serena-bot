@@ -1,4 +1,4 @@
-const { checkBoolean, getImgURL } = require('../utils')
+const { checkBoolean, getImgURL } = require('../../utils')
 
 module.exports = class PokemonForm {
 
@@ -17,6 +17,7 @@ module.exports = class PokemonForm {
         this.evolutions = this.checkEvolutions(props.evolutions)
         this.movements = this.checkMovements(props.movements)
         this.images = this.checkImages(props.name, props.isGiga)
+        this.spawn = checkBoolean(props.spawn, this.isMega || this.isGiga || this.isParadox ? false : true)
 
     }
 
@@ -30,13 +31,26 @@ module.exports = class PokemonForm {
     checkStats(stats) {
         if (stats === undefined || typeof stats !== "object") stats = {}
 
-        const opts = ["hp", "attack", "defense", "spattack", "spdefense", "speed"]
+        let opts = ["hp", "attack", "defense", "spattack", "spdefense", "speed"]
+        let newOpts = Object.keys(stats).filter(e => opts.includes(e)).map(e => {
+            let name = 'Salud'
+            let stat = {
+                key: e,
+                points: stats[e],
+            }
 
-        opts.forEach(e => {
-            if (!stats[e]) stats[e] = 30
+            if (e == 'attack') name = 'Ataque'
+            else if (e == 'defense') name = 'Defense'
+            else if (e == 'spattack') name = 'Ataque Esp.'
+            else if (e == 'spdefense') name = 'Defensa Esp.'
+            else if (e == 'speed') name = 'Velocidad'
+
+            stat.name = name
+
+            return stat
         })
 
-        return stats
+        return newOpts
     }
 
     checkEvolutions(data) {
@@ -46,7 +60,7 @@ module.exports = class PokemonForm {
     
                 data[i] = {
                     form: data[i].form.trim(),
-                    type: data[i].type || "level",
+                    type: data[i].type || "nivel",
                     level: data[i].level || 1,
                     friendship: data[i].friendship || 0,
                     item: data[i].item || null,

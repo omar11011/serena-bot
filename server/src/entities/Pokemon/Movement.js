@@ -1,4 +1,4 @@
-const { checkBoolean } = require('../utils')
+const { checkBoolean } = require('../../utils')
 
 module.exports = class Movement {
 
@@ -41,7 +41,7 @@ module.exports = class Movement {
         if (data && Array.isArray(data) && data.length > 0) {
             data = data.filter(e => e.state).map(e => {
                 return {
-                    state: e.state,
+                    state: e.state.toLowerCase(),
                     prob: e.prob || 100,
                     toUser: checkBoolean(e.toUser, false),
                 }

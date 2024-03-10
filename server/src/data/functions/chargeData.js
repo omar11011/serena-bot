@@ -1,20 +1,16 @@
 const fs = require('fs')
 const path = require('path')
 
-let rootURL = path.join(__dirname, '../content')
-let databases = fs.readdirSync(rootURL).filter(e => !e.endsWith('.js'))
-
-function chargeData(db) {
+function chargeData(db, table) {
 
     let data = []
 
-    if (databases.includes(db)) {
-        let pathURL = path.join(rootURL, db)
-        let content = fs.readdirSync(pathURL)
+    try {
+        let url = path.join(__dirname, `../content`, db, table)
 
-        content.forEach(archive => {
-            let archiveURL = path.join(pathURL, archive)
-
+        fs.readdirSync(url).forEach(archive => {
+            let archiveURL = path.join(url, archive)
+            
             if (fs.statSync(archiveURL).isDirectory()) {
                 fs.readdirSync(archiveURL).forEach(file => {
                     let fileURL = path.join(archiveURL, file)
@@ -25,8 +21,12 @@ function chargeData(db) {
             else addData(archiveURL, data)
         })
     }
-    
-    return data
+    catch {
+        console.log('No se encontró el directorio.')
+    }
+    finally {
+        return data
+    }
 
 }
 

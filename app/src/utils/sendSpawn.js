@@ -11,49 +11,39 @@ module.exports = async props => {
     const send = await megadb.countSpawnMessages(message.guild.id)
     if (!send) return
 
-    const channels = await spawn.obtener(message.guild.id) || []
-
+    const channels = (await axios.create({
+        url: 'server',
+        props: { server: message.guild.id },
+    })).data.spawn
+    
     channels.forEach(async channel => {
-        const pokemon = (await axios.get({ url: 'spawn' })).data
+        const pokemon = (await axios.get({ url: 'pokemon/spawn' })).data
+        console.log(pokemon)
         if (!pokemon) return
     
         try {
-            // Shiny
-            let probShiny = Math.ceil(Math.random() * 100000)
-            if (probShiny > 99700) pokemon.shiny = true
-
             const embed = createEmbed({
                 data: {
                     color: pokemon.types[0],
                     title: `¡Ha aparecido un Pokémon salvaje!`,
                     description: `Captura este Pokémon antes que huya usando el comando ${prefix}catch <nombre>`,
-                    image: pokemon.images[pokemon.shiny ? 'front_shiny' : 'front_default'],
+                    image: pokemon.images,
                 },
                 obj: true,
             })
-
-            pokemon.pokemon = { name: pokemon.name, specie: pokemon.specie }
-
-            delete pokemon.name
-            delete pokemon.specie
-            delete pokemon.images
-
-            // Estableciendo las estadísticas
-            Object.keys(pokemon.stats).forEach(e => {
-                pokemon.stats[e] = Math.floor(Math.random() * 32)
-            })
             
-            // Creando en memoria
-            await memcached.createData({
-                key: `spawn-${message.guild.id}-${channel}`,
-                data: pokemon,
-                time: 30,
-            })
-            
-            return message.client.channels.cache.get(channel).send({ embeds: [embed] })
+            return message.client.channels.cache.get(channel.channel).send({ embeds: [embed] })
         }
         catch {
-            await spawn.extract(message.guild.id, channel)
+            await axios.update({
+                url: 'server',
+                props: {
+                    server: message.guild.id,
+                    set: {
+                        spawn: channels.filter(e => e.channel != channel.channel),
+                    },
+                },
+            })
         }
     })
 

@@ -35,7 +35,7 @@ module.exports = {
                 await sendSpawn({ message, prefix: props.prefix })
 
                 const prob = Math.ceil(Math.random() * 100)
-                if (prob <= 100) await axios.addUserExp(message, Math.ceil(Math.random() * 3))
+                if (prob <= 30) await axios.addUserExp(message, Math.ceil(Math.random() * 3))
             }
 
             return

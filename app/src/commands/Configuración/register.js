@@ -11,16 +11,16 @@ module.exports = new Command({
             url: 'user',
             props: { user: message.author.id },
         })
-
+        
         if (user.error) return
         else user = user.data
-
+        
         const emoji = message.client.emoji
         
         return createEmbed({
             message,
             data: {
-                color: user.created ? 'darkGreen' : 'darkRed',
+                color: user.created ? 'green' : 'red',
                 description:    
                     user.created
                     ? `${emoji("check")} ¡Te has regitrado exitosamente como entrenador pokémon!`

@@ -7,7 +7,7 @@ module.exports = () => {
   mongoose.connect('mongodb://127.0.0.1:27017/serena', {})
     .then(async () => {
       console.log('Conexión exitosa a MongoDB')
-      await insertData()
+      // await insertData()
     })
     .catch((error) => {
       console.error('Error al conectar a MongoDB:', error.message)

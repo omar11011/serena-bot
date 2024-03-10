@@ -1,13 +1,6 @@
 const mongoose = require('mongoose')
 
-const effectivenessSchema = new mongoose.Schema({
-    _id: false,
-    high: [String],
-    low: [String],
-    immune: [String],
-})
-
-module.exports = mongoose.model('Type', new mongoose.Schema(
+module.exports = mongoose.model('PokemonRegion', new mongoose.Schema(
     {
         id: Number,
         name: {
@@ -15,7 +8,6 @@ module.exports = mongoose.model('Type', new mongoose.Schema(
             required: true,
             unique: true,
         },
-        effectiveness: { type: effectivenessSchema, default: {} },
         image: String,
     },
     {

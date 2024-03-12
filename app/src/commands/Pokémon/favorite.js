@@ -1,35 +1,47 @@
 const Command = require('../../class/Command')
-const createEmbed = require('../../utils/createEmbed')
-
 const { axios } = require('../../services')
 
 module.exports = new Command({
     name: "favorite",
     alias: ['fav', 'favo'],
     description: "Agrega o retira un Pokémon de tu lista de favoritos.",
-    args: ['id'],
     cooldown: 4,
 	async execute(message, props) {
-        let id = props.args[0]
-        if (isNaN(id) || parseInt(id) < 1) return message.react('❌')
+        let id = props.args.length > 0 ? props.args[0] : null
+        if (isNaN(id)) id = null
+        else id = parseInt(id)
 
-        let data = (await axios.get({ url: `captures/${message.author.id}?skip=${parseInt(id) - 1}` })).data
-        if (data.list && data.list.length < 1) return message.react('🧐')
+        let emoji = message.client.emoji
+        let data = (await axios.get({
+            url: `serena/capture?owner=${message.author.id}&limit=1${id ? 'skip=' + id : 'select=yes'}`,
+        })).data
 
-        await axios.update({
-            url: 'capture',
-            props: {
-                id: data.id,
-                favorite: !data.favorite,
-            },
-        })
+        if (data.length < 1) return message.reply(id ? 'El ID ingresado es inválido.' : 'No tienes ningún pokémon seleccionado.')
+        else data = data[0]
 
-        return createEmbed({
-            message,
-            data: {
-                color: 'green',
-                description: `Acabas de ${!data.favorite ? 'agregar' : 'retirar'} a ${data.shiny ? '⭐ ' : ''}**${data.pokemon.alias || data.pokemon.name}** ${!data.favorite ? 'a' : 'de'} tu lista de favoritos.`,
-            },
+        message.reply(`${data.shiny ? '⭐ ' : ''}**${data.alias || data.name}** ${data.options.isFavorite ? 'ya' : 'no'} es uno de tus pokémon favoritos, ¿quieres ${data.options.isFavorite ? 'descartarlo' : 'añadirlo'} como favorito? Responde ` + '`sí` o `yes` para aceptar.').then(msg => {
+            const collectorFilter = m => m.author.id === message.author.id
+            const collector = message.channel.createMessageCollector({ filter: collectorFilter, time: 5000, max: 1 })
+
+            collector.on('collect', async m => {
+                let response = m.content.toLowerCase()
+
+                if (['yes', 'sí', 'si', 'sim'].includes(response)) {
+                    m.react(emoji('check'))
+
+                    await axios.update({
+                        url: 'serena/capture',
+                        props: {
+                            _id: data._id,
+                            set: { 'options.isFavorite': !data.options.isFavorite },
+                        },
+                    })
+
+                    return m.reply(`Acabas de ${!data.options.isFavorite ? 'agregar' : 'retirar'} a ${data.shiny ? '⭐ ' : ''}**${data.alias || data.name}** ${!data.options.isFavorite ? 'a' : 'de'} tu lista de favoritos.`)
+                }
+            })
+
+            collector.on('end', () => msg.react('⌛'))
         })
 	},
 })

@@ -10,14 +10,14 @@ module.exports = new Command({
         const emoji = message.client.emoji
         const embed = { color: 'red' }
         const channels = (await axios.create({
-            url: 'server',
+            url: 'serena/server',
             props: { server: message.guild.id },
         })).data.spawn
 
         if (!channels.map(e => e.channel).includes(message.channel.id)) embed.description = `${emoji("error")} Este canal no era un spawn de Pokémon.`
         else {
             await axios.update({
-                url: 'server',
+                url: 'serena/server',
                 props: {
                     server: message.guild.id,
                     set: { spawn: channels.filter(e => e.channel != message.channel.id) },

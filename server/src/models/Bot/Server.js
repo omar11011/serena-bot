@@ -14,7 +14,6 @@ const pokemonSchema = new mongoose.Schema({
     shiny: { type: Boolean, default: false },
     gender: { type: String, default: 'none' },
     stats: [statSchema],
-    images: String,
 })
 
 const spawnSchema = new mongoose.Schema({

@@ -9,7 +9,7 @@ module.exports = new Command({
     description: "Revisa tu balance.",
 	async execute(message, props) {
         let user = (await axios.create({
-            url: 'user',
+            url: 'serena/user',
             props: { user: message.author.id },
         })).data
         let emoji = message.client.emoji

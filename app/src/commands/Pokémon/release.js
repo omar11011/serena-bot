@@ -1,42 +1,45 @@
 const Command = require('../../class/Command')
-
 const { axios } = require('../../services')
 
 module.exports = new Command({
     name: "release",
     description: "Libera algún Pokémon que hayas capturado.",
-    args: ['id'],
 	async execute(message, props) {
-        let id = props.args[0]
+        let id = props.args.length > 0 ? props.args[0] : null
+        if (isNaN(id)) id = null
+        else id = parseInt(id)
+
         let emoji = message.client.emoji
-        if (isNaN(id) || parseInt(id) < 1) return message.react('❌')
+        let data = (await axios.get({
+            url: `serena/capture?owner=${message.author.id}&limit=1&${id ? 'skip=' + id : 'select=yes'}`,
+        })).data
 
-        let data = (await axios.get({ url: `captures/${message.author.id}?skip=${parseInt(id) - 1}` })).data
-        if (Array.isArray(data) && data.length < 1) return message.react('🧐')
+        if (data.length < 1) return message.reply(id ? 'El ID ingresado es inválido.' : 'No tienes ningún pokémon seleccionado.')
+        else data = data[0]
 
-        message.reply(`¿Estás seguro de querer liberar a ${data.shiny ? '⭐ ' : ''}**${data.pokemon.alias || data.pokemon.name}**? Responde ` + '`yes` par aceptar.')
+        message.reply(`¿Estás segur@ de querer liberar a ${data.shiny ? '⭐ ' : ''}**${data.alias || data.name}**? Responde ` + '`sí` o `yes` para aceptar.').then(msg => {
+            const collectorFilter = m => m.author.id === message.author.id
+            const collector = message.channel.createMessageCollector({ filter: collectorFilter, time: 5000, max: 1 })
 
-        const collectorFilter = m => m.author.id === message.author.id
-        const collector = message.channel.createMessageCollector({ filter: collectorFilter, time: 10000, max: 1 })
+            collector.on('collect', async m => {
+                let response = m.content.toLowerCase()
 
-        collector.on('collect', async m => {
-            if (m.content.toLowerCase() === 'yes') {
-                await axios.update({
-                    url: `capture`,
-                    props: {
-                        id: data.id,
-                        user: null,
-                        select: false,
-                        favorite: false,
-                        marketPrice: null,
-                    },
-                })
+                if (['yes', 'sí', 'si', 'sim'].includes(response)) {
+                    m.react(emoji('check'))
 
-                return m.reply(`Has liberado a ${data.shiny ? '⭐ ' : ''}**${data.pokemon.alias || data.pokemon.name}** 😦`)
-            }
-            m.react(emoji('check'))
+                    await axios.update({
+                        url: 'serena/capture',
+                        props: {
+                            _id: data._id,
+                            set: {owner: null, options: {} },
+                        },
+                    })
+
+                    return m.reply(`Acabas de liberar a ${data.shiny ? '⭐ ' : ''}**${data.alias || data.name}** 😢`)
+                }
+            })
+
+            collector.on('end', () => msg.react('⌛'))
         })
-
-        collector.on('end', () => message.react('⌛'))
 	},
 })

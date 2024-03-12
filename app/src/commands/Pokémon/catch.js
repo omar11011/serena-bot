@@ -2,7 +2,7 @@ const Command = require('../../class/Command')
 const checkWord = require('../../utils/checkWord')
 const createEmbed = require('../../utils/createEmbed')
 
-const { axios, memcached } = require('../../services')
+const { axios } = require('../../services')
 
 module.exports = new Command({
     name: "catch",
@@ -12,28 +12,42 @@ module.exports = new Command({
 	async execute(message, props) {
         let emoji = message.client.emoji
         let response = checkWord(props.args.join(' ').toLowerCase())
-        let pokemon = await memcached.getData(`spawn-${message.guild.id}-${message.channel.id}`)
+        let spawn = (await axios.create({
+            url: 'serena/server',
+            props: { server: message.guild.id },
+        })).data.spawn
+        let channel = spawn.find(e => e.channel == message.channel.id)
 
-        if (!pokemon) return message.react('🧐')
+        if (!channel || !channel.pokemon) return message.react('🧐')
         
-        if (checkWord(pokemon.pokemon.name.toLowerCase()) === response || checkWord(pokemon.pokemon.specie.toLowerCase()) === response) {
+        if (checkWord(channel.pokemon.name.toLowerCase()) === response || checkWord(channel.pokemon.specie.toLowerCase()) === response) {
             let level = Math.ceil(Math.random() * 15)
 
-            await memcached.deleteData(`spawn-${message.guild.id}-${message.channel.id}`)
-            await axios.create({
-                url: `capture`,
-                props: {
-                    ...pokemon,
-                    user: message.author.id,
-                    level,
-                },
-            })
+            channel.pokemon.progress = { level }
+            channel.pokemon.owner = message.author.id
 
-            return createEmbed({
+            createEmbed({
                 message,
                 data: {
                     color: 'green',
-                    description: `${emoji('check')} ¡Felicidades! Has capturado un ${pokemon.shiny ? '⭐ ' : ''}**${pokemon.pokemon.name}** nivel **${level}**.`,
+                    description: `${emoji('check')} ¡Felicidades! Has capturado un ${channel.pokemon.shiny ? '⭐ ' : ''}**${channel.pokemon.name}** nivel **${level}**.`,
+                },
+            })
+
+            await axios.create({
+                url: 'serena/capture',
+                props: channel.pokemon,
+            })
+
+            spawn.map(e => {
+                if (e.channel == message.channel.id) e.pokemon = null
+            })
+
+            return await axios.update({
+                url: 'serena/server',
+                props: {
+                    server: message.guild.id,
+                    set: { spawn: spawn },
                 },
             })
         }

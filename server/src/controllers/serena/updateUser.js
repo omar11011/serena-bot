@@ -15,6 +15,6 @@ module.exports = async (req, res) => {
         return response(res, 200, result)
     }
     catch {
-        return response(res, 401, { error: `Hubo un problema al tratar de actualizar al usuario ${body.user}` })
+        return response(res, 401)
     }
 }

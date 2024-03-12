@@ -8,7 +8,7 @@ module.exports = new Command({
     description: "Mira los canales en los que spawnearán Pokémon salvajes.",
 	async execute(message, props) {
         const channels = (await axios.create({
-            url: 'server',
+            url: 'serena/server',
             props: { server: message.guild.id },
         })).data.spawn
 

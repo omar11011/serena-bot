@@ -11,7 +11,7 @@ module.exports = new Command({
         let emoji = message.client.emoji
         let embed = { color: 'red' }
         let server = (await axios.create({
-            url: 'server',
+            url: 'serena/server',
             props: { server: message.guild.id },
         })).data
 
@@ -27,7 +27,7 @@ module.exports = new Command({
                 server.spawn.push({ channel: message.channel.id })
                 
                 await axios.update({
-                    url: 'server',
+                    url: 'serena/server',
                     props: {
                         server: message.guild.id,
                         set: {

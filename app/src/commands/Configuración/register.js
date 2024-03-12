@@ -8,7 +8,7 @@ module.exports = new Command({
     description: "Regístrate como entrenador pokémon.",
 	async execute(message, props) {
         let user = await axios.create({
-            url: 'user',
+            url: 'serena/user',
             props: { user: message.author.id },
         })
         

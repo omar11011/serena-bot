@@ -1,6 +1,4 @@
 const Command = require('../../class/Command')
-const createEmbed = require('../../utils/createEmbed')
-
 const { axios } = require('../../services')
 
 module.exports = new Command({
@@ -9,48 +7,30 @@ module.exports = new Command({
     args: ['id'],
     cooldown: 4,
 	async execute(message, props) {
-        let id = props.args[0]
-        if (isNaN(id) || parseInt(id) < 1) return message.react('❌')
+        let id = isNaN(props.args[0]) ? 1 : props.args[0]
+        let data = (await axios.get({
+            url: `serena/capture?owner=${message.author.id}&limit=1&skip=${id}`,
+        })).data
+        
+        if (data.length < 1) return message.reply(id ? 'El ID ingresado es inválido.' : 'No tienes ningún pokémon seleccionado.')
+        else data = data[0]
 
-        let data = (await axios.get({ url: `captures/${message.author.id}?skip=${parseInt(id) - 1}` })).data
-        if (Array.isArray(data) && data.length < 1) return message.react('🧐')
+        if (data.options.isSelected) return message.reply(`Ya tenías seleccionado a ${data.shiny ? '⭐ ' : ''}**${data.alias || data.name}**.`)
 
-        let currentPokemon = (await axios.get({ url: `captures/${message.author.id}?select=yes` })).data
-
-        if (currentPokemon.id && currentPokemon.id === data.id) {
-            return createEmbed({
-                message,
-                data: {
-                    color: 'red',
-                    description: 'Ya tienes seleccionado este Pokémon.',
-                },
-            })
-        }
-
-        if (currentPokemon._id) {
+        let pokemonSelected = (await axios.get({
+            url: `serena/capture?owner=${message.author.id}&limit=1&select=yes`,
+        })).data
+        
+        let changes = [data, ...pokemonSelected].forEach(async e => {
             await axios.update({
-                url: 'capture',
+                url: 'serena/capture',
                 props: {
-                    id: currentPokemon.id,
-                    select: false,
+                    _id: e._id,
+                    set: { 'options.isSelected': !e.options.isSelected },
                 },
             })
-        }
-
-        await axios.update({
-            url: 'capture',
-            props: {
-                id: data.id,
-                select: true,
-            },
         })
-
-        return createEmbed({
-            message,
-            data: {
-                color: 'green',
-                description: `Acabas de seleccionar a ${data.shiny ? '⭐ ' : ''}**${data.pokemon.alias || data.pokemon.name}** como tu compañero.`,
-            },
-        })
+    
+        return message.reply(`Acabas de seleccionar a ${data.shiny ? '⭐ ' : ''}**${data.alias || data.name}**.`)
 	},
 })

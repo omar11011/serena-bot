@@ -10,7 +10,7 @@ module.exports = new Command({
 	async execute(message, props) {
         let money = 5 + Math.floor(Math.random() * 11)
         let inc = (await axios.update({
-            url: 'user',
+            url: 'serena/user',
             props: {
                 user: message.author.id,
                 inc: {

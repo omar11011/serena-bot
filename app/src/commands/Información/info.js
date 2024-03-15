@@ -3,58 +3,58 @@ const createEmbed = require('../../utils/createEmbed')
 
 const { axios } = require('../../services')
 
-const stats = {
-    'hp': 'Salud',
-    'attack': 'Ataque',
-    'defense': 'Defensa',
-    'spattack': 'Ataque Esp.',
-    'spdefense': 'Defensa Esp.',
-    'speed': 'Velocidad',
-}
-
 module.exports = new Command({
     name: "info",
     description: "Muestra información de un pokémon que has capturado.",
     cooldown: 4,
 	async execute(message, props) {
-        let queries = []
-        let url = `captures/${message.author.id}?`
+        let id = null
+        let desc = false
 
-        if (props.args.length < 1) queries.push(`select=yes`)
-        else {
-            let id = props.args.join(' ').toLowerCase()
-
-            if (id === 'latest') queries.push(`sort=desc`)
-            else if (!isNaN(id)) queries.push(`skip=${parseInt(id) - 1}`)
+        if (props.args.length > 0) {
+            if (isNaN(props.args[0])) desc = true
+            else id = parseInt(props.args[0])
         }
 
-        url += queries.join('&')
-
-        let data = (await axios.get({ url })).data
-        if (data.list && data.list.length < 1) return message.react('🧐')
+        let { data } = (await axios.get({
+            url: `serena/capture?owner=${message.author.id}&limit=1${desc ? '&desc=yes' : (id ? '&skip=' + id : '&select=yes')}`,
+        })).data
         
-        let { types, images } = (await axios.get({ url: `pokemon/form/${data.pokemon.name}` })).data
+        if (data.length < 1) {
+            if (desc) message.reply('Aún no has arapado ningún pokémon.')
+            else {
+                if (id) return message.react('🧐')
+                else return message.reply('No tienes seleccionado a ningún pokémon.')
+            }
+        }
+        else data = data[0]
+        console.log(data)
+        let { types, images } = (await axios.get({
+            url: `pokemon/form/${data.name}`
+        })).data
 
+        let iv = (data.stats.map(e => e.points).reduce((a, b) => a + b, 0) * 100 / (31 * data.stats.length)).toFixed(2)
         let description = [
-            `**IV:** ${data.stats.iv}%`,
-            `**Nivel:** ${data.level}`,
-            `**Experiencia:** ${data.xp}/${data.level * 100}`,
+            `**IV:** ${iv}%`,
+            `**Nivel:** ${data.progress.level}`,
+            `**Experiencia:** ${data.progress.xp}/${data.progress.level * 100}`,
             `**Sexo:** ${['male', 'female'].includes(data.gender) ? ':' + data.gender + '_sign:' : '❌'}`,
-            `${data.marketPrice ? `**Precio:** ${data.marketPrice}` : ''}`,
-            `**Movimientos:** ${data.movements.length > 0 ? 'a' : 'Tu pokémon aún no ha aprendido ningún movimiento.'}`,
+            `${data.options.onSale ? `**Precio:** ${data.options.marketPrice}` : ''}`,,
+            `**Fecha de captura:** ${(new Date(data.createdAt)).toLocaleDateString('es-PE', { timeZone: 'America/Lima' })}`,
+            // `**Movimientos:** ${data.movements.length > 0 ? 'a' : 'Tu pokémon aún no ha aprendido ningún movimiento.'}`,
         ]
 
         return createEmbed({
             message,
             data: {
                 color: types[0],
-                title: (data.shiny ? '⭐ ' : '') + (data.pokemon.alias || data.pokemon.name),
-                description: description.join('\n'),
-                thumbnail: data.shiny ? images.front_shiny : images.front_default,
-                fields: Object.keys(stats).map(e => {
-                    return { name: stats[e], value: data.stats[e] + '/31', inline: true }
+                title: (data.shiny ? '⭐ ' : '') + (data.alias || data.name),
+                description: description.filter(e => e).join('\n'),
+                image: data.shiny ? images.front_shiny : images.front_default,
+                fields: data.stats.map(e => {
+                    return { name: e.name, value: e.points + '/31', inline: true }
                 }),
-                footer: `ID Global: ${data.id}`,
+                footer: `ID Global: ${data._id}`,
             },
         })
 	},

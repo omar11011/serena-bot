@@ -8,7 +8,7 @@ module.exports = new Command({
     cooldown: 4,
 	async execute(message, props) {
         let id = isNaN(props.args[0]) ? 1 : props.args[0]
-        let data = (await axios.get({
+        let { data } = (await axios.get({
             url: `serena/capture?owner=${message.author.id}&limit=1&skip=${id}`,
         })).data
         
@@ -19,7 +19,7 @@ module.exports = new Command({
 
         let pokemonSelected = (await axios.get({
             url: `serena/capture?owner=${message.author.id}&limit=1&select=yes`,
-        })).data
+        })).data.data
         
         let changes = [data, ...pokemonSelected].forEach(async e => {
             await axios.update({

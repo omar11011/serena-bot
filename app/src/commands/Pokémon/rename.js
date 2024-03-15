@@ -9,7 +9,7 @@ module.exports = new Command({
         if (alias && alias.length > 15) return message.reply(`El nombre de tu pokémon no puede tener más de 12 caracteres.`)
 
         let emoji = message.client.emoji
-        let data = (await axios.get({
+        let { data } = (await axios.get({
             url: `serena/capture?owner=${message.author.id}&limit=1&select=yes`,
         })).data
 

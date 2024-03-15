@@ -10,7 +10,7 @@ module.exports = new Command({
         else id = parseInt(id)
 
         let emoji = message.client.emoji
-        let data = (await axios.get({
+        let { data } = (await axios.get({
             url: `serena/capture?owner=${message.author.id}&limit=1&${id ? 'skip=' + id : 'select=yes'}`,
         })).data
 

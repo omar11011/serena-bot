@@ -14,9 +14,11 @@ module.exports = async (req, res) => {
         data = data._doc
         
         // Evoluciones disponibles
-        let evolutions = data.evolutions.map(e => e.form)
-        let existEvolutions = (await models.PokemonForm.find({ name: { $in: evolutions } }).select('name')).map(e => e._doc.name)
-        data.evolutions = data.evolutions.filter(e => existEvolutions.includes(e.form))
+        if (data.evolutions && Array.isArray(data.evolutions) && data.evolutions.length > 0) {
+            let evolutions = data.evolutions.map(e => e.form)
+            let existEvolutions = (await models.PokemonForm.find({ name: { $in: evolutions } }).select('name')).map(e => e._doc.name)
+            data.evolutions = data.evolutions.filter(e => existEvolutions.includes(e.form))
+        }
         
         // Movimientos disponibles
         let moves = data.movements.map(e => e.name)

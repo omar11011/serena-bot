@@ -15,7 +15,7 @@ module.exports = new Command({
             shiny = true
             id = id.replace('shiny', '').trim()
         }
-
+        
         let data = (await axios.get({ url: `pokemon/form/${id}` })).data
         if (!data) return message.react('❓')
         
@@ -23,18 +23,13 @@ module.exports = new Command({
             message, 
             data: {
                 color: data.types[0],
-                author: `${shiny ? '⭐ ' : ''}${data.name}`,
+                title: `${shiny ? '⭐ ' : ''}${data.name}`,
                 description: `**Región:** ${data.region}\n**Especie:** ${data.specie}\n**Tipos:** ${data.types.join(' / ')}`,
                 image: data.images[!shiny ? 'front_default' : 'front_shiny'],
-                fields: [
-                    { name: 'HP', value: String(data.stats.hp), inline: true },
-                    { name: 'Ataque', value: String(data.stats.attack), inline: true },
-                    { name: 'Defensa', value: String(data.stats.defense), inline: true },
-                    { name: 'Ataque Esp.', value: String(data.stats.spattack), inline: true },
-                    { name: 'Defensa Esp.', value: String(data.stats.spdefense), inline: true },
-                    { name: 'Velocidad', value: String(data.stats.speed), inline: true },
-                ],
-                footer: `ID Global: ${data.id}`,
+                fields: data.stats.map(e => {
+                    return { name: e.name, value: String(e.points), inline: true }
+                }),
+                footer: `ID Global: ${data._id}`,
             }
         })
 	},

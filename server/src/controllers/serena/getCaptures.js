@@ -2,20 +2,33 @@ const { SerenaCapture } = require('../../models')
 const { response } = require('../../utils')
 
 module.exports = async (req, res) => {
+    let ids
+    let opts = {
+        page: 1,
+        skip: 0,
+        limit: 15,
+        sort: 1,
+    }
     let options = []
     let query = req.query
 
-    if (query.page && !isNaN(query.page)) query.page = Math.abs(parseInt(query.page))
-    else query.page = 1
+    if (query.page && !isNaN(query.page)) opts.page = Math.abs(parseInt(query.page))
 
-    if (query.skip && !isNaN(query.skip)) query.skip = Math.abs(parseInt(query.skip)) - 1
-    else query.skip = 0
+    if (query.skip && !isNaN(query.skip)) opts.skip = Math.abs(parseInt(query.skip)) - 1
 
-    if (query.limit && !isNaN(query.limit)) query.limit = Math.abs(parseInt(query.limit))
-    else query.limit = 15
+    if (query.limit && !isNaN(query.limit)) opts.limit = Math.abs(parseInt(query.limit))
+
+    if (query.desc && query.desc.toLowerCase() === 'yes') opts.sort = -1
 
     // Owner filter
-    if (query.owner) options.push({ owner: { $regex: new RegExp(query.owner, 'i') } })
+    if (query.owner) {
+        options.push({ owner: { $regex: new RegExp(query.owner, 'i') } })
+
+        ids = (await SerenaCapture.find({ owner: query.owner }).select('_id').sort({ createdAt: 1 })).map(doc => doc._id.toString())
+
+        opts.capturedPokemon = ids.length
+        opts.maxPage = Math.ceil(ids.length / opts.limit)
+    }
 
     // Shiny filter
     if (query.shiny && query.shiny.toLowerCase() === 'yes') options.push({ shiny: true })
@@ -42,8 +55,17 @@ module.exports = async (req, res) => {
     let data = await SerenaCapture.find(options.length < 1 ? {} : {
         $and: options,
     })
-    .skip(query.skip + (query.page - 1) * query.limit)
-    .limit(query.limit * query.page)
+    .skip(opts.skip + (opts.page - 1) * opts.limit)
+    .limit(opts.limit * opts.page)
+    .sort({ createdAt: opts.sort })
 
-    return response(res, 200, data)
+    if (ids) {
+        data = data.map(e => {
+            e = e._doc
+            e.position = ids.indexOf(e._id.toString()) + 1
+            return e
+        })
+    }
+
+    return response(res, 200, { opts, data })
 }

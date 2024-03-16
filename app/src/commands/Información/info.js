@@ -28,7 +28,7 @@ module.exports = new Command({
             }
         }
         else data = data[0]
-        console.log(data)
+        
         let { types, images } = (await axios.get({
             url: `pokemon/form/${data.name}`
         })).data
@@ -36,12 +36,10 @@ module.exports = new Command({
         let iv = (data.stats.map(e => e.points).reduce((a, b) => a + b, 0) * 100 / (31 * data.stats.length)).toFixed(2)
         let description = [
             `**IV:** ${iv}%`,
-            `**Nivel:** ${data.progress.level}`,
-            `**Experiencia:** ${data.progress.xp}/${data.progress.level * 100}`,
+            `**Nivel:** ${data.progress.level} (${data.progress.xp}/${data.progress.level * 100})`,
             `**Sexo:** ${['male', 'female'].includes(data.gender) ? ':' + data.gender + '_sign:' : '❌'}`,
             `${data.options.onSale ? `**Precio:** ${data.options.marketPrice}` : ''}`,,
             `**Fecha de captura:** ${(new Date(data.createdAt)).toLocaleDateString('es-PE', { timeZone: 'America/Lima' })}`,
-            // `**Movimientos:** ${data.movements.length > 0 ? 'a' : 'Tu pokémon aún no ha aprendido ningún movimiento.'}`,
         ]
 
         return createEmbed({

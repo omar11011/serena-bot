@@ -19,7 +19,7 @@ module.exports = new Command({
     args: ['id'],
 	async execute(message, props) {
         let id = props.args.join(" ")
-        let data = (await axios.get({ url: `move/${id}` })).data
+        let data = (await axios.get({ url: `pokemon/movement/${id}` })).data
 
         if (!data) return message.react('❓')
 

@@ -10,13 +10,33 @@ module.exports = new Command({
 	async execute(message, props) {
         let page = 1
         let moves = {}
-        let id = props.args.join(' ').toLowerCase()
+        let id, data
         
-        let data = (await axios.get({ url:
-            `pokemon/form/${id}`,
-        })).data
 
-        if (!data) return message.react('❓')
+        if (props.args.length > 0) {
+            id =props.args.join(' ').toLowerCase()
+            data = (await axios.get({ url: `pokemon/form/${id}` })).data
+        }
+        else data = (await axios.get({ url: `serena/capture?onwer=${message.author.id}&limit=1&select=yes` })).data
+
+        if (!data) {
+            if (id) return message.react('❓')
+            else return message.reply('No tienes seleccionado a ningún pokémon.')
+        }
+        else if (data.data) {
+            data = data.data[0]
+            data.images = (await axios.get({ url: `pokemon/form/${data.name}` })).data.images
+
+            return createEmbed({
+                message,
+                data: {
+                    color: 'green',
+                    author: `Movimientos de ${data.shiny ? '⭐ ' : ''}${data.name}`,
+                    description: `Estos son los movimientos que ha aprendido hasta el momento tu ${data.alias || data.name}.\n\n` + data.movements.map((e, i) => `**[${i + 1}] ${e.name}:** Aprendido por ${e.category}`).join('\n'),
+                    thumbnail: data.images[data.shiny ? 'front_shiny' : 'front_default'],
+                },
+            })
+        }
 
         data.movements.map(e => {
             if (!moves[e.category]) moves[e.category] = []

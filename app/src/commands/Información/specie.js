@@ -12,13 +12,12 @@ module.exports = new Command({
         let data = (await axios.get({ url: `pokemon/specie/${id}` })).data
 
         if (!data) return message.react('❓')
-        
+        console.log(data)
         return createEmbed({
             message,
             data: {
-                color: data.types ? data.types[0] : 'random',
                 author: `${data.name} #${data.pokedex}`,
-                description: `**Forma${data.forms.length <= 1 ? '' : 's'}:** ${data.forms.join(', ')}`,
+                description: `**Forma${data.forms.length <= 1 ? '' : 's'}:** ${data.forms.map(e => e.name).join(', ')}`,
                 image: data.image,
                 fields: [
                     { name: 'Sexo ♂️', value: `${data.gender.male}%`, inline: true },

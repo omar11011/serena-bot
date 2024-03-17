@@ -15,13 +15,7 @@ module.exports = {
             },
         }
         
-        if (message.author.bot) {
-            // if (message.author.id === nekotina.getNekoId()) {
-                
-            // }
-            await bots(message)
-            return
-        }
+        if (message.author.bot) return await bots(message)
         
         if (!message.content.startsWith(props.prefix)) {
             // Mención al bot

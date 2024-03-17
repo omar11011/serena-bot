@@ -22,6 +22,12 @@ const spawnSchema = new mongoose.Schema({
     pokemon: { type: pokemonSchema, default: null },
 })
 
+const configSchema = new mongoose.Schema({
+    _id: false,
+    prefix: { type: String, default: 's!' },
+    language: { type: String, default: 'es' },
+})
+
 module.exports = mongoose.model('SerenaServer', new mongoose.Schema(
     {
         server: {
@@ -29,6 +35,7 @@ module.exports = mongoose.model('SerenaServer', new mongoose.Schema(
             required: true,
             unique: true,
         },
+        config: { type: configSchema, default: {} },
         spawn: [spawnSchema],
     },
     {

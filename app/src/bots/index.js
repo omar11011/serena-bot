@@ -1,26 +1,11 @@
-const fs = require('fs')
-const path = require('path')
+const ids = require('./ids.json')
 
-const bots = {}
+module.exports = async message => {
+    let id = message.author.id
 
-const botsPath = fs.readdirSync(__dirname)
+    if (!ids.hasOwnProperty(id)) return
 
-botsPath.forEach(el => {
+    let exec = require('./' + ids[id])
 
-    const filePath = path.join(__dirname, el)
-    
-    if (fs.statSync(filePath).isDirectory()) {
-
-        bots[el] = {}
-
-        fs.readdirSync(filePath).filter(e => e !== 'index.js').forEach(e => {
-            const name = e.split('.')[0]
-
-            bots[el][name] = require(path.join(filePath, e))
-        })
-
-    }
-
-})
-
-module.exports = bots
+    await exec(message)
+}

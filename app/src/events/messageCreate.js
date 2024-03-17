@@ -1,7 +1,6 @@
 const { Events } = require('discord.js')
 const { megadb, colors, axios } = require('../services')
-const { nekotina } = require('../bots')
-
+const bots = require('../bots')
 const sendSpawn = require('../utils/sendSpawn')
 const checkCommandOptions = require('../utils/checkCommandOptions')
 
@@ -17,12 +16,10 @@ module.exports = {
         }
         
         if (message.author.bot) {
-            if (message.author.id === nekotina.getNekoId()) {
-                if (message.embeds.length > 0) {
-                    if (!message.reference) await nekotina.saveGifs(message.embeds)
-                    else await nekotina.saveCharacters(message)
-                }
-            }
+            // if (message.author.id === nekotina.getNekoId()) {
+                
+            // }
+            await bots(message)
             return
         }
         

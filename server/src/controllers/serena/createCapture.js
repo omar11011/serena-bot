@@ -6,6 +6,8 @@ module.exports = async (req, res) => {
     
     if (!body.name) return response(res, 402)
 
+    body.code = String(Date.now()) + Math.floor(Math.random() * 10)
+
     let data = await SerenaCapture.create(body)
 
     return response(res, 200, data._doc)

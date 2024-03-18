@@ -19,7 +19,7 @@ module.exports = new Command({
 
         if (option === 'p') {
             data = (await axios.get({
-                url: `serena/capture?_id=${id}&limit=1`,
+                url: `serena/capture?code=${id}&limit=1`,
             })).data.data
         }
 
@@ -27,7 +27,7 @@ module.exports = new Command({
         else data = data[0]
 
         if (!data.options.onSale) return message.reply(`**${data.alias || data.name}** no se encuentra a la venta.`)
-        // if (data.owner === message.author.id) return message.reply(`No puedes comprar a **${data.alias || data.name}** porque es de tu propiedad.`)
+        if (data.owner === message.author.id) return message.reply(`No puedes comprar a **${data.alias || data.name}** porque es de tu propiedad.`)
 
         let user = (await axios.create({
             url: 'serena/user',

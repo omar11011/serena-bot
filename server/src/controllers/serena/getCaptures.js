@@ -21,7 +21,7 @@ module.exports = async (req, res) => {
     if (query.desc && query.desc.toLowerCase() === 'yes') opts.sort = -1
 
     // ID filter
-    if (query._id) options.push({ _id: query._id })
+    if (query.code) options.push({ code: query.code })
 
     // Owner filter
     if (query.owner) {

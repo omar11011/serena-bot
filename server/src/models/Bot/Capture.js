@@ -31,6 +31,7 @@ const progressSchema = new mongoose.Schema({
 module.exports = mongoose.model('SerenaCapture', new mongoose.Schema(
     {
         id: String,
+        code: String,
         owner: String,
         name: {
             type: String,

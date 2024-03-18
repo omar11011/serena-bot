@@ -17,6 +17,7 @@ module.exports = new Command({
         return createEmbed({
             message,
             data: {
+                color: 'green',
                 description: `🤑 Actualmente tienes:\n\n${emoji("money")} ${user.balance.money}\n:gem: ${user.balance.gems}`
             },
         })

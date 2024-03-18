@@ -13,9 +13,7 @@ module.exports = new Command({
             url: 'serena/user',
             props: {
                 user: message.author.id,
-                inc: {
-                    "balance.money": money,
-                },
+                inc: { "balance.money": money },
             },
         })).data
 

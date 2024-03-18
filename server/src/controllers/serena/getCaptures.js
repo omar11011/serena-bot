@@ -20,6 +20,9 @@ module.exports = async (req, res) => {
 
     if (query.desc && query.desc.toLowerCase() === 'yes') opts.sort = -1
 
+    // ID filter
+    if (query._id) options.push({ _id: query._id })
+
     // Owner filter
     if (query.owner) {
         options.push({ owner: { $regex: new RegExp(query.owner, 'i') } })

@@ -39,6 +39,7 @@ module.exports = mongoose.model('SerenaCapture', new mongoose.Schema(
         },
         alias: { type: String, defaul: null },
         shiny: { type: Boolean, default: false },
+        nature: String,
         progress: { type: progressSchema, default: {} },
         gender: { type: String, default: 'none' },
         stats: { type: [statSchema], default: null },

@@ -13,8 +13,8 @@ const stats = {
 }
 
 module.exports = new Command({
-    name: "move",
-    alias: ["movement"],
+    name: "moveinfo",
+    alias: ["movei"],
     description: "Muestra la información de un movimiento.",
     args: ['id'],
 	async execute(message, props) {

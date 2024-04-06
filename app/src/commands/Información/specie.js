@@ -12,7 +12,7 @@ module.exports = new Command({
         let data = (await axios.get({ url: `pokemon/specie/${id}` })).data
 
         if (!data) return message.react('❓')
-        console.log(data)
+        
         return createEmbed({
             message,
             data: {

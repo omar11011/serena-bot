@@ -14,6 +14,9 @@ router.put('/serena/server', isAuthorized, async (req, res) => await controller.
 router.get('/serena/capture', async (req, res) => await controller.getCaptures(req, res))
 router.post('/serena/capture', isAuthorized, async (req, res) => await controller.createCapture(req, res))
 router.put('/serena/capture', isAuthorized, async (req, res) => await controller.updateCapture(req, res))
+router.get('/serena/duel/:user', async (req, res) => await controller.getDuel(req, res))
+router.post('/serena/duel', isAuthorized, async (req, res) => await controller.createDuel(req, res))
+router.put('/serena/duel', isAuthorized, async (req, res) => await controller.updateDuel(req, res))
 
 // Pokémon
 router.get('/pokemon/form/:id', async (req, res) => await controller.getPokemonForm(req, res))

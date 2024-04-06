@@ -4,6 +4,8 @@ module.exports = class Nature {
 
         this.id = props.id
         this.name = props.name
+        this.up = props.up
+        this.low = props.low
 
     }
 

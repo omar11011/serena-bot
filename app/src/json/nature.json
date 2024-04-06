@@ -1,0 +1,102 @@
+{
+    "Fuerte": {
+        "up": "attack",
+        "low": "attack"
+    },
+    "Huraña": {
+        "up": "attack",
+        "low": "defense"
+    },
+    "Firme": {
+        "up": "attack",
+        "low": "spattack"
+    },
+    "Pícara": {
+        "up": "attack",
+        "low": "spdefense"
+    },
+    "Audaz": {
+        "up": "attack",
+        "low": "speed"
+    },
+    "Osada": {
+        "up": "defense",
+        "low": "attack"
+    },
+    "Dócil": {
+        "up": "defense",
+        "low": "defense"
+    },
+    "Agitada": {
+        "up": "defense",
+        "low": "spattack"
+    },
+    "Floja": {
+        "up": "defense",
+        "low": "spdefense"
+    },
+    "Plácida": {
+        "up": "defense",
+        "low": "speed"
+    },
+    "Modesta": {
+        "up": "spattack",
+        "low": "attack"
+    },
+    "Afable": {
+        "up": "spattack",
+        "low": "defense"
+    },
+    "Tímida": {
+        "up": "spattack",
+        "low": "spattack"
+    },
+    "Alocada": {
+        "up": "spattack",
+        "low": "spdefense"
+    },
+    "Mansa": {
+        "up": "spattack",
+        "low": "speed"
+    },
+    "Serena": {
+        "up": "spdefense",
+        "low": "attack"
+    },
+    "Amable": {
+        "up": "spdefense",
+        "low": "defense"
+    },
+    "Cauta": {
+        "up": "spdefense",
+        "low": "spattack"
+    },
+    "Rara": {
+        "up": "spdefense",
+        "low": "spdefense"
+    },
+    "Grosera": {
+        "up": "spdefense",
+        "low": "speed"
+    },
+    "Miedosa": {
+        "up": "speed",
+        "low": "attack"
+    },
+    "Activa": {
+        "up": "speed",
+        "low": "defense"
+    },
+    "Alegre": {
+        "up": "speed",
+        "low": "spattack"
+    },
+    "Ingenua": {
+        "up": "speed",
+        "low": "spdefense"
+    },
+    "Seria": {
+        "up": "speed",
+        "low": "speed"
+    }
+}

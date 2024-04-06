@@ -8,6 +8,8 @@ module.exports = mongoose.model('PokemonNature', new mongoose.Schema(
             required: true,
             unique: true,
         },
+        up: String,
+        low: String,
     },
     {
         timestamps: false,

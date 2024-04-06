@@ -1,6 +1,8 @@
 const { SerenaCapture } = require('../../models')
 const { response } = require('../../utils')
 
+const natures = require('../../data/content/Pokemon/Nature')
+
 module.exports = async (req, res) => {
     let ids
     let opts = {
@@ -65,7 +67,16 @@ module.exports = async (req, res) => {
     if (ids) {
         data = data.map(e => {
             e = e._doc
+            let nature = natures.find(n => n.name === e.nature)
+            
             e.position = ids.indexOf(e._id.toString()) + 1
+            e.stats = e.stats.map(s => {
+                s = s._doc
+                s.nature = 1
+                if (nature.up === s.key) s.nature += 0.1
+                else if (nature.low === s.key) s.nature -= 0.1
+                return s
+            })
             return e
         })
     }

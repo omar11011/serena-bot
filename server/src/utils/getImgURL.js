@@ -17,6 +17,6 @@ module.exports = ({ name, route, type, extension }) => {
         name = name.replace(e[0], e[1])
     })
 
-    return `${url}${route}/${type}/${name}.${extension}`
+    return `${url}${type}/${route}/${name}.${extension}`
 
 }

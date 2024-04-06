@@ -61,7 +61,6 @@ module.exports = new Command({
 
                             msg.edit({ embeds: [ await sendEmbed(data, moves, page) ] })
                         }
-                        else m.react('🧐')
                     })
         
                     collector.on('end', () => msg.react('⌛'))

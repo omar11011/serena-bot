@@ -2,10 +2,15 @@ const { axios } = require('../services')
 
 const calculatePower = require('./calculatePower')
 
-module.exports = async trainers => {
-    let pokemon = []
+module.exports = async props => {
+    let { trainers, typeOfBattle } = props
+    let DATA = []
 
     for (let i = 0; i < trainers.length; i++) {
+        let obj = {
+            pokemon: null,
+            battle: {},
+        }
         let data = (await axios.get({
             url: `serena/capture?owner=${trainers[i]}&select=yes&limit=1`,
         })).data.data[0]
@@ -15,8 +20,12 @@ module.exports = async trainers => {
                 url: `pokemon/form/${data.name}`,
             })).data
 
-            data.form = data.name
-            data.rival = trainers[i > 0 ? 0 : 1]
+            data.originalForm = data.name
+
+            obj.battle.user = trainers[i]
+            obj.battle.rival = trainers[i > 0 ? 0 : 1]
+            obj.battle.typeOfBattle = typeOfBattle
+
             data.stats = data.stats.map(e => {
                 let power = calculatePower(e, data.progress.level, form.stats.find(f => f.key === e.key).points)
                 return {
@@ -29,24 +38,18 @@ module.exports = async trainers => {
             data.movements = data.movements.map(e => e.name)
             data.image = form.images[data.shiny ? 'front_shiny' : 'front_default']
 
-            delete data._id
-            delete data.code
-            delete data.gender
-            delete data.options
-            delete data.position
-            delete data.createdAt
-            delete data.updatedAt
+            obj.pokemon = data
 
-            pokemon.push(data)
+            DATA.push(obj)
         }
     }
 
-    if (pokemon.length < 2) return false
+    if (DATA.length < 2) return false
     
-    for (let i = 0; i < pokemon.length; i++) {
+    for (let i = 0; i < DATA.length; i++) {
         await axios.create({
             url: 'serena/duel',
-            props: pokemon[i],
+            props: DATA[i],
         })
     }
 

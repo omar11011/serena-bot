@@ -5,11 +5,8 @@ module.exports = async (req, res) => {
     let body = req.body
     
     try {
-        let result = await SerenaDuelData.deleteMany({
-            $or: [
-                { owner: body.user },
-                { rival: body.user },
-            ],
+        body.ids.forEach(async e => {
+            await SerenaDuelData.deleteOne({ _id: e })
         })
 
         return response(res, 200, result)

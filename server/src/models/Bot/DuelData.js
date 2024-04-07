@@ -28,20 +28,33 @@ const turnSchema = new mongoose.Schema({
     lastTurn: { type: Number, default: null },
 })
 
+const pokemonSchema = new mongoose.Schema({
+    _id: false,
+    code: String,
+    name: String,
+    originalForm: String,
+    specie: String,
+    shiny: Boolean,
+    progress: progressSchema,
+    stats: [statSchema],
+    movements: [String],
+    equippedItem: String,
+    image: String,
+})
+
+const battleSchema = new mongoose.Schema({
+    _id: false,
+    user: String,
+    rival: String,
+    typeOfBattle: { type: String, default: 'friendly' },
+    finish: { type: Boolean, default: false },
+})
+
 module.exports = mongoose.model('SerenaDuelData', new mongoose.Schema(
     {
-        owner: String,
-        name: String,
-        form: String,
-        specie: String,
-        shiny: Boolean,
-        rival: String,
-        progress: progressSchema,
-        stats: [statSchema],
-        movements: [String],
-        item: String,
-        image: String,
+        pokemon: pokemonSchema,
         turn: { type: turnSchema, default: {} },
+        battle: battleSchema,
     },
     {
         timestamps: true,

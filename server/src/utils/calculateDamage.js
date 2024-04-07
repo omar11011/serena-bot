@@ -1,25 +1,27 @@
 const models = require('../models')
 
 module.exports = async data => {
-    let result = { damage: null, priority: 0 }
-    let { me, rival } = data
+    let { user, rival } = data
 
     try {
-        if (Math.ceil(Math.random() * 100) > me.turn.precision) return
+        if (Math.ceil(Math.random() * 100) > user.turn.precision) {
+            user.turn.damage = 0
+            return
+        }
 
-        let usedMove = await models.PokemonMovement.findOne({ name: me.turn.move })
+        let usedMove = await models.PokemonMovement.findOne({ name: user.turn.move })
 
         if (usedMove.class === 'Estado') {
             return
         }
 
         let type = await models.PokemonType.findOne({ name: usedMove.type })
-        let myPokemon = await models.PokemonForm.findOne({ name: me.name })
-        let rivalPokemon = await models.PokemonForm.findOne({ name: rival.name })
+        let myPokemon = await models.PokemonForm.findOne({ name: user.pokemon.name })
+        let rivalPokemon = await models.PokemonForm.findOne({ name: rival.pokemon.name })
         
         let B = myPokemon.types.includes(usedMove.type) ? 1.5 : 1
         let E = 1
-        let N = me.progress.level
+        let N = user.pokemon.progress.level
         let V = 85 + Math.floor(Math.random() * 16)
         let A = myPokemon.stats.find(e => e.key === (usedMove.class === 'Especial' ? 'spattack' : 'attack')).points
         let P = usedMove.power
@@ -33,22 +35,22 @@ module.exports = async data => {
         })
 
         // Uso del Movimiento Z
-        if (me.turn.willUseZMove && !me.turn.usedZMove && me.item && !me.isMega && !me.isGiga) {
-            let crystal = used.z_move.find(e => e.pokemon.length > 0 ? e.item === me.item && e.pokemon.includes(e.specie) : e.item === me.item)
+        if (user.turn.willUseZMove && !user.turn.usedZMove && user.item && !user.isMega && !user.isGiga) {
+            let crystal = usedMove.z_move.find(e => e.pokemon.length > 0 ? e.item === user.pokemon.equippedItem && e.pokemon.includes(e.pokemon.specie) : e.item === user.pokemon.equippedItem)
             if (crystal) {
                 P = crystal.power
-                result.newName = crystal.newName
-                me.turn.usedZMove = true
+                user.turn.move = crystal.newName
+                user.turn.usedZMove = true
             }
         }
 
-        result.priority = usedMove.priority
-        result.damage = Math.round(0.01 * B * E * V * ((0.2 * N + 1) * A * P / (25 * D) + 2))
+        user.turn.priority = usedMove.priority
+        user.turn.lastDamage = user.turn.damage = Math.round(0.01 * B * E * V * ((0.2 * N + 1) * A * P / (25 * D) + 2))
     }
     catch {
-        console.log('Ocurrió un error inesperado al calcular los valores del movimiento', me.turn.move)
+        console.log('Ocurrió un error inesperado al calcular los valores del movimiento', user.turn.move)
     }
     finally {
-        return result
+        return data
     }
 }

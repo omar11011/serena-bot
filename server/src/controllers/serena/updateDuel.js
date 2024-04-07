@@ -5,27 +5,24 @@ const calculateDamage = require('../../utils/calculateDamage')
 
 module.exports = async (req, res) => {
     let msgs = []
-    let finish = false
-    let { me, rival } = req.body
-
-    if (!me || !rival || !me.turn.move) return response(res, 200, { error: 'Datos incompletos.' })
+    let data = req.body
+    let win, loser
     
-    if (!me.turn.damage) {
-        let calculate = await calculateDamage(req.body)
-        if (calculate.newName) me.turn.move = calculate.newName
-        me.turn.lastDamage = me.turn.damage = calculate.damage
-        me.lastPriority = calculate.priority
+    if (!data.user.turn.damage) {
+        data = await calculateDamage(data)
     }
 
-    if (me.turn.damage !== null && rival.turn.damage !== null) {
+    let { user, rival } = req.body
+
+    if (user.turn.damage !== null && rival.turn.damage !== null) {
         let tie = 0
-        let trainers = [me, rival]
-        let win, loser
+        let trainers = [user, rival]
 
         trainers.map((t, i) => {
             let hp
+            let { pokemon } = t
 
-            t.stats.forEach(e => {
+            pokemon.stats.forEach(e => {
                 if (e.key === 'hp') {
                     e.power -= trainers[i === 0 ? 1 : 0].turn.damage || 0
                     if (e.power <= 0) {
@@ -36,50 +33,56 @@ module.exports = async (req, res) => {
                 }
                 return e
             })
-            msgs.push(`${t.shiny ? '⭐ ' : ''}**${t.name}**\nEntrenador: ${isNaN(t.owner) ? t.owner : `<@${t.owner}>`}\nHP: ${hp}\nTurno: ${t.name} ${t.turn.move ? `ha usado ${t.turn.move}${t.turn.damage ? ` causando ${t.turn.damage} puntos de daño` : ''}.` : `no ha usado ningún movimiento.`}`)
+            msgs.push(`${pokemon.shiny ? '⭐ ' : ''}**${pokemon.name}**\nEntrenador: ${isNaN(t.battle.user) ? t.battle.user : `<@${t.battle.user}>`}\nHP: ${hp}\nTurno: ${pokemon.name} ${t.turn.move ? `ha usado ${t.turn.move}${t.turn.damage ? ` causando ${t.turn.damage} puntos de daño` : ''}.` : `no ha usado ningún movimiento.`}`)
         })
 
         if (tie > 0) {
-            finish = true
-            win = me
+            user.battle.finish = rival.battle.finish = true
+            win = user
             loser = rival
 
             if (tie > 1) {
-                let higherPriority = rival.turn.lastPriority > me.turn.lastPriority
-                let higherSpeed = rival.stats.find(e => e.key === 'speed').power > me.stats.find(e => e.key === 'speed').power
+                let higherPriority = rival.turn.lastPriority > user.turn.lastPriority
+                let higherSpeed = rival.pokemon.stats.find(e => e.key === 'speed').power > user.pokemon.stats.find(e => e.key === 'speed').power
 
                 if (higherSpeed || higherPriority) {
                     win = rival
-                    loser = me
+                    loser = user
                 }
     
-                msgs.push(`${win.name} ha sido más rápido, por lo que ha golpeado primero.`)
-                win.stats.forEach(e => {
+                msgs.push(`${win.pokemon.name} ha sido más rápido, por lo que ha golpeado primero.`)
+                win.pokemon.stats.forEach(e => {
                     if (e.key === 'hp') {
                         e.power += loser.turn.damage
                         msgs.forEach(msg => {
-                            if (msg.includes(win.owner)) msg.replace('0/', `${e.power}/`)
+                            if (msg.includes(win.battle.user)) msg.replace('0/', `${e.power}/`)
                         })
                     }
                 })
             }
             else {
-                if (rival.stats.find(e => e.key === 'hp').power > 0) {
+                if (rival.pokemon.stats.find(e => e.key === 'hp').power > 0) {
                     win = rival
-                    loser = me
+                    loser = user
                 }
             }
 
-            msgs.push(`¡${isNaN(win.owner) ? win.owner : `<@${win.owner}>`} y ${win.shiny ? '⭐ ' : ''}${win.name} han ganado el combate!`)
+            msgs.push(`¡${isNaN(win.battle.user) ? win.battle.user : `<@${win.battle.user}>`} y ${win.pokemon.shiny ? '⭐ ' : ''}${win.pokemon.name} han ganado el combate!`)
         }
 
-        me.turn.move = me.turn.damage = me.turn.lastPriority = me.turn.lastTurn = null
+        user.turn.move = user.turn.damage = user.turn.lastPriority = user.turn.lastTurn = null
         rival.turn.move = rival.turn.damage = rival.turn.lastPriority = rival.turn.lastTurn = null
-        me.turn.willUseZMove = rival.turn.willUseZMove = false
+        user.turn.willUseZMove = rival.turn.willUseZMove = false
     }
 
-    await SerenaDuelData.updateOne({ _id: me._id }, me)
+    await SerenaDuelData.updateOne({ _id: user._id }, user)
     await SerenaDuelData.updateOne({ _id: rival._id }, rival)
     
-    return response(res, 200, { finish, msgs })
+    return response(res, 200, {
+        finish: user.battle.finish ? {
+            userId: win.battle.user,
+            pokemonId: win.pokemon.code,
+        } : false,
+        msgs,
+    })
 }

@@ -9,8 +9,8 @@ module.exports = async (req, res) => {
     if (current) {
         data = await SerenaDuelData.find({
             $or: [
-                { owner: user },
-                { rival: user },
+                { 'battle.user': user },
+                { 'battle.rival': user },
             ],
         })
     }

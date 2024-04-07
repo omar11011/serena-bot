@@ -5,6 +5,7 @@ const statSchema = new mongoose.Schema({
     key: String,
     points: Number,
     power: Number,
+    initialPower: Number,
 })
 
 const progressSchema = new mongoose.Schema({
@@ -23,6 +24,7 @@ const turnSchema = new mongoose.Schema({
     willUseZMove: { type: Boolean, default: false },
     isMega: { type: Boolean, default: false },
     isGiga: { type: Boolean, default: false },
+    lastPriority: { type: Number, default: null },
     lastTurn: { type: Number, default: null },
 })
 
@@ -31,12 +33,13 @@ module.exports = mongoose.model('SerenaDuelData', new mongoose.Schema(
         owner: String,
         name: String,
         form: String,
-        alias: String,
+        specie: String,
         shiny: Boolean,
         rival: String,
         progress: progressSchema,
         stats: [statSchema],
         movements: [String],
+        item: String,
         image: String,
         turn: { type: turnSchema, default: {} },
     },

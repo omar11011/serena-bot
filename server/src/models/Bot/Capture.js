@@ -44,6 +44,7 @@ module.exports = mongoose.model('SerenaCapture', new mongoose.Schema(
         gender: { type: String, default: 'none' },
         stats: { type: [statSchema], default: null },
         movements: { type: [moveSchema], default: null },
+        item: String,
         options: { type: optionsSchema, default: {} },
     },
     {

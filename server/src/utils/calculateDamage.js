@@ -1,11 +1,12 @@
 const models = require('../models')
 
 module.exports = async data => {
+    let result = { damage: null, priority: 0 }
     let { me, rival } = data
 
-    if (Math.ceil(Math.random() * 100) > me.turn.precision) return 0
-
     try {
+        if (Math.ceil(Math.random() * 100) > me.turn.precision) return
+
         let usedMove = await models.PokemonMovement.findOne({ name: me.turn.move })
 
         if (usedMove.class === 'Estado') {
@@ -31,11 +32,23 @@ module.exports = async data => {
             else if (effectiveness.immune.includes(e)) E *= 0
         })
 
-        let damage = 0.01 * B * E * V * ((0.2 * N + 1) * A * P / (25 * D) + 2)
+        // Uso del Movimiento Z
+        if (me.turn.willUseZMove && !me.turn.usedZMove && me.item && !me.isMega && !me.isGiga) {
+            let crystal = used.z_move.find(e => e.pokemon.length > 0 ? e.item === me.item && e.pokemon.includes(e.specie) : e.item === me.item)
+            if (crystal) {
+                P = crystal.power
+                result.newName = crystal.newName
+                me.turn.usedZMove = true
+            }
+        }
 
-        return Math.round(damage)
+        result.priority = usedMove.priority
+        result.damage = Math.round(0.01 * B * E * V * ((0.2 * N + 1) * A * P / (25 * D) + 2))
     }
     catch {
-        return 0
+        console.log('Ocurrió un error inesperado al calcular los valores del movimiento', me.turn.move)
+    }
+    finally {
+        return result
     }
 }

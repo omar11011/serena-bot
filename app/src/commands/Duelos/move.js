@@ -4,6 +4,9 @@ const { axios } = require('../../services')
 const createEmbed = require('../../utils/createEmbed')
 const getDuelData = require('../../functions/getDuelData')
 
+const megadb = require('megadb')
+const db = new megadb.crearDB('request', 'events')
+
 module.exports = new Command({
     name: "move",
     description: "Ejecuta un movimiento durante una batalla Pokémon.",
@@ -33,6 +36,28 @@ module.exports = new Command({
             url: 'serena/duel',
             props: duel,
         })).data
-        console.log(result.finish)
+
+        if (result.finish) {
+            await axios.delete({
+                url: 'serena/duel',
+                props: { user: message.author.id },
+            })
+            await db.eliminar(duel.me.owner)
+            await db.eliminar(duel.rival.owner)
+        }
+        
+        if (result.msgs.length > 0) {
+            return createEmbed({
+                message,
+                data: {
+                    title: `BATALLA POKÉMON`,
+                    color: 'green',
+                    description: result.msgs.join("\n\n"),
+                },
+            })
+        }
+        else {
+            return message.react('✅')
+        }
 	},
 })

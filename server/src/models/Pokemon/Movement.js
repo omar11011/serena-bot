@@ -17,10 +17,12 @@ const stateChanges = new mongoose.Schema({
 
 const zMove = new mongoose.Schema({
     _id: false,
+    newName: String,
     type: String,
     item: String,
     power: Number,
-    pokemon: String,
+    requiredMove: String,
+    pokemon: [String],
 })
 
 module.exports = mongoose.model('PokemonMovement', new mongoose.Schema(

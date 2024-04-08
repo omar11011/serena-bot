@@ -44,8 +44,9 @@ module.exports = async data => {
             }
         }
 
+        user.lastHits = Math.ceil(Math.random() * usedMove.hits)
         user.turn.priority = usedMove.priority
-        user.turn.lastDamage = user.turn.damage = Math.round(0.01 * B * E * V * ((0.2 * N + 1) * A * P / (25 * D) + 2))
+        user.turn.lastDamage = user.turn.damage = Math.round(0.01 * B * E * V * ((0.2 * N + 1) * A * P / (25 * D) + 2)) * user.lastHits
     }
     catch {
         console.log('Ocurrió un error inesperado al calcular los valores del movimiento', user.turn.move)

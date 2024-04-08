@@ -25,6 +25,7 @@ const turnSchema = new mongoose.Schema({
     isMega: { type: Boolean, default: false },
     isGiga: { type: Boolean, default: false },
     lastPriority: { type: Number, default: null },
+    lastHits: { type: Number, default: null },
     lastTurn: { type: Number, default: null },
 })
 

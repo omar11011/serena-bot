@@ -33,7 +33,7 @@ module.exports = async (req, res) => {
                 }
                 return e
             })
-            msgs.push(`${pokemon.shiny ? '⭐ ' : ''}**${pokemon.name}**\nEntrenador: ${isNaN(t.battle.user) ? t.battle.user : `<@${t.battle.user}>`}\nHP: ${hp}\nTurno: ${pokemon.name} ${t.turn.move ? `ha usado ${t.turn.move}${t.turn.damage ? ` causando ${t.turn.damage} puntos de daño` : ''}.` : `no ha usado ningún movimiento.`}`)
+            msgs.push(`${pokemon.shiny ? '⭐ ' : ''}**${pokemon.name}**\nEntrenador: ${isNaN(t.battle.user) ? t.battle.user : `<@${t.battle.user}>`}\nHP: ${hp}\nTurno: ${pokemon.name} ${t.turn.move ? `ha usado ${t.turn.move}${t.turn.damage ? ` causando ${t.turn.damage} puntos de daño` : ''}.${t.turn.lastHits > 1 ? `El ataque ha golpeado ${t.turn.lastHits} veces.` : ''}` : `no ha usado ningún movimiento.`}`)
         })
 
         if (tie > 0) {

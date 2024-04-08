@@ -1,8 +1,6 @@
 const Command = require('../../class/Command')
 const loadDataDuel = require('../../functions/loadDuelData')
-
-const megadb = require('megadb')
-const db = new megadb.crearDB('request', 'events')
+const userInEvent = require('../../functions/userInEvent')
 
 module.exports = new Command({
     name: "duel",
@@ -12,18 +10,18 @@ module.exports = new Command({
 	async execute(message, props) {
         let vsBot = false
         let typeOfBattle = 'friendly'
-        let existReq = await db.obtener(message.author.id)
+        let existReq = await userInEvent.get(message.author.id)
         
         if (props.mention.bot || props.mention.id === message.author.id) vsBot = true
-        if (!vsBot) existReq = existReq || await db.obtener(props.mention.id)
+        if (!vsBot) existReq = existReq || await userInEvent.get(props.mention.id)
 
         if (props.args.includes('-c')) typeOfBattle = 'competition'
         if (existReq) return message.reply('¡Ups! Parece que uno de ustedes dos se encuentra dentro de otra batalla o un intercambio en este momento.')
 
-        await db.establecer(message.author.id, 'duel')
+        await userInEvent.create(message.author.id, 'duel')
 
         if (!vsBot) {
-            await db.establecer(props.mention.id, 'duel')
+            await userInEvent.create(props.mention.id, 'duel')
 
             message.channel.send(`<@${props.mention.id}>, el entrenador <@${message.author.id}> te ha retado a una batalla. ` + 'Responde `yes` o `sí` para aceptar el desafío.').then(msg => {
                 let start = false
@@ -48,8 +46,7 @@ module.exports = new Command({
                 collector.on('end', () => {
                     setTimeout(async () => {
                         if (!start) {
-                            await db.eliminar(message.author.id)
-                            await db.eliminar(props.mention.id)
+                            await userInEvent.clear([message.author.id, props.mention.id])
                             msg.react('⌛')
                         }
                     }, 3000)

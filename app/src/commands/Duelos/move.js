@@ -3,9 +3,7 @@ const Command = require('../../class/Command')
 const { axios } = require('../../services')
 const createEmbed = require('../../utils/createEmbed')
 const getDuelData = require('../../functions/getDuelData')
-
-const megadb = require('megadb')
-const db = new megadb.crearDB('request', 'events')
+const userInEvent = require('../../functions/userInEvent')
 
 module.exports = new Command({
     name: "move",
@@ -38,14 +36,13 @@ module.exports = new Command({
             url: 'serena/duel',
             props: duel,
         })).data
-        console.log(result)
+        
         if (result.finish) {
             await axios.delete({
                 url: 'serena/duel',
                 props: { ids: [user._id, rival._id] },
             })
-            await db.eliminar(user.battle.user)
-            await db.eliminar(rival.battle.user)
+            await userInEvent.clear([user.battle.user, rival.battle.user])
         }
         
         if (result.msgs.length > 0) {

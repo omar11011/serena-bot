@@ -7,15 +7,13 @@ module.exports = new Command({
     userPermissions: ['Administrator'],
     description: "Elimina uno de los canales de spawn del servidor.",
 	async execute(message, props) {
-        const emoji = message.client.emoji
-        const embed = { color: 'red' }
         const channels = (await axios.create({
             url: 'serena/server',
             props: { server: message.guild.id },
         })).data.spawn
+        const channelIsSpawn = channels.map(e => e.channel).includes(message.channel.id)
 
-        if (!channels.map(e => e.channel).includes(message.channel.id)) embed.description = `${emoji("error")} Este canal no era un spawn de Pokémon.`
-        else {
+        if (channelIsSpawn) {
             await axios.update({
                 url: 'serena/server',
                 props: {
@@ -23,14 +21,17 @@ module.exports = new Command({
                     set: { spawn: channels.filter(e => e.channel != message.channel.id) },
                 },
             })
-
-            embed.color = 'green'
-            embed.description = `${emoji("check")} Este canal ya no forma parte de los spawns del servidor.`
         }
 
         return createEmbed({
             message,
-            data: embed,
+            data: {
+                color: channelIsSpawn ? 'green' : 'red',
+                description:
+                    channelIsSpawn
+                    ? `✅ Este canal ya no forma parte de los spawns del servidor.`
+                    : `❌ Este canal no era un spawn de Pokémon.`,
+            },
         })
 	},
 })

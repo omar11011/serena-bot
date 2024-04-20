@@ -5,7 +5,7 @@ module.exports = {
     statChanges: [
         {
             stat: "hp",
-            points: 1,
+            points: 10,
             toUser: true,
         },
     ],

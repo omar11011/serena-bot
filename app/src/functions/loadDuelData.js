@@ -27,13 +27,9 @@ module.exports = async props => {
             obj.battle.typeOfBattle = typeOfBattle
 
             data.stats = data.stats.map(e => {
-                let power = calculatePower(e, data.progress.level, form.stats.find(f => f.key === e.key).points)
-                return {
-                    key: e.key,
-                    points: e.points,
-                    power: power,
-                    initialPower: power,
-                }
+                e.power = calculatePower(e, data.progress.level, form.stats.find(f => f.key === e.key).points)
+                e.initialPower = e.power
+                return e
             })
             data.movements = data.movements.map(e => e.name)
             data.image = form.images[data.shiny ? 'front_shiny' : 'front_default']

@@ -5,7 +5,7 @@ module.exports = {
     statChanges: [
         {
             stat: "precision",
-            points: 2,
+            points: 20,
             toUser: true,
         },
     ],

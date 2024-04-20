@@ -4,7 +4,7 @@ module.exports = {
     class: "Estado",
     statChanges: [
         {
-            stat: "defensa",
+            stat: "defense",
             points: 1,
             toUser: true,
         },

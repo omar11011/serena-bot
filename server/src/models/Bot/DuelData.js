@@ -2,10 +2,13 @@ const mongoose = require('mongoose')
 
 const statSchema = new mongoose.Schema({
     _id: false,
+    name: String,
     key: String,
     points: Number,
     power: Number,
     initialPower: Number,
+    effort_points: Number,
+    nature: Number,
 })
 
 const progressSchema = new mongoose.Schema({
@@ -27,6 +30,9 @@ const turnSchema = new mongoose.Schema({
     lastPriority: { type: Number, default: null },
     lastHits: { type: Number, default: null },
     lastTurn: { type: Number, default: null },
+    futureState: { type: String, default: null },
+    currentState: { type: String, default: null },
+    msgs: { type: [String], default: [] },
 })
 
 const pokemonSchema = new mongoose.Schema({

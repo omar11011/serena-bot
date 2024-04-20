@@ -7,7 +7,7 @@ module.exports = {
     statChanges: [
         {
             stat: "precision",
-            points: 0.3,
+            points: 30,
         },
     ],
     z_move: [

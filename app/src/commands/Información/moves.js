@@ -17,7 +17,7 @@ module.exports = new Command({
             id =props.args.join(' ').toLowerCase()
             data = (await axios.get({ url: `pokemon/form/${id}` })).data
         }
-        else data = (await axios.get({ url: `serena/capture?onwer=${message.author.id}&limit=1&select=yes` })).data
+        else data = (await axios.get({ url: `serena/capture?owner=${message.author.id}&limit=1&select=yes` })).data
 
         if (!data) {
             if (id) return message.react('❓')

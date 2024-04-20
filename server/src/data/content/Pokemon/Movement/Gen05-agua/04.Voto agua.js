@@ -6,6 +6,4 @@ module.exports = {
     z_move: [
         { power: 160 },
     ],
-    stateChanges: [],
-    statChanges: [],
 }

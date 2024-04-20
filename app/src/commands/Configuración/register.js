@@ -15,16 +15,14 @@ module.exports = new Command({
         if (user.error) return
         else user = user.data
         
-        const emoji = message.client.emoji
-        
         return createEmbed({
             message,
             data: {
                 color: user.created ? 'green' : 'red',
                 description:    
                     user.created
-                    ? `${emoji("check")} ¡Te has regitrado exitosamente como entrenador pokémon!`
-                    : `${emoji("error")} ¡Ups! Ya te habías registrado anteriormente.`
+                    ? `✅ ¡Te has regitrado exitosamente como entrenador pokémon!`
+                    : `❌ ¡Ups! Ya te habías registrado anteriormente.`
             }
         })
 	},

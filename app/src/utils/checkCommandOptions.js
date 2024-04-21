@@ -1,5 +1,6 @@
 const admins = require('../json/admins.json')
 const getCooldown = require('./getCooldown')
+const userInEvent = require('../functions/userInEvent')
 const { PermissionsBitField } = require('discord.js')
 
 module.exports = async (msg, cmd, props) => {
@@ -42,10 +43,20 @@ module.exports = async (msg, cmd, props) => {
 
     // Check cooldown
     const cooldown = await getCooldown(cmd, msg.author.id)
-
     if (cooldown.mustWait) {
         res.error = true
         res.msg = cooldown.msg
+    }
+
+    // Check if the user is in duel or exchange
+    let eventType = await userInEvent.get(msg.author.id)
+    if (eventType && (!cmd.onlyEvent || !cmd.onlyInEvent.includes(eventType))) {
+        res.error = true
+        res.msg = `No puedes usar este comando mientras estés en un ${eventType}.`
+    }
+    else if (!eventType && cmd.onlyInEvent.length > 0 && !cmd.useEvenWithoutEvent) {
+        res.error = true
+        res.msg = `Este comando sólo puede ser utilizado si es que estás en un ${cmd.onlyInEvent.join(' o ')}.`
     }
 
     return res

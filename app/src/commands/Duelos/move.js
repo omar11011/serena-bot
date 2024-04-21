@@ -9,6 +9,7 @@ module.exports = new Command({
     name: "move",
     description: "Ejecuta un movimiento durante una batalla Pokémon.",
     cooldown: 5,
+    onlyInEvent: ['duelo'],
 	async execute(message, props) {
         let move = props.args.length > 0 && parseInt(props.args[0]) > 0 ? parseInt(props.args[0]) : null
         let willUseZMove = props.args.length > 1 && props.args[1].toLowerCase() === 'z' ? true : false

@@ -17,6 +17,8 @@ module.exports = new Command({
     alias: ["movei"],
     description: "Muestra la información de un movimiento.",
     args: ['id'],
+    onlyInEvent: ['duelo'],
+    useEvenWithoutEvent: true,
 	async execute(message, props) {
         let id = props.args.join(" ")
         let data = (await axios.get({ url: `pokemon/movement/${id}` })).data

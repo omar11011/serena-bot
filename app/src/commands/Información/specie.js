@@ -7,6 +7,8 @@ module.exports = new Command({
     name: "specie",
     description: "Muestra información de un especie Pokémon en específico.",
     args: ['id'],
+    onlyInEvent: ['duelo', 'intercambio'],
+    useEvenWithoutEvent: true,
 	async execute(message, props) {
         let id = props.args.join(' ')
         let data = (await axios.get({ url: `pokemon/specie/${id}` })).data

@@ -7,6 +7,8 @@ module.exports = new Command({
     name: "info",
     description: "Muestra información de un pokémon que has capturado.",
     cooldown: 4,
+    onlyInEvent: ['duelo', 'intercambio'],
+    useEvenWithoutEvent: true,
 	async execute(message, props) {
         let id = null
         let desc = false

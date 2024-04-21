@@ -6,6 +6,8 @@ module.exports = new Command({
     name: "help",
     description: "ℹ️ Muestra más información sobre un comando..",
     alias: ["ayuda"],
+    onlyInEvent: ['duelo', 'intercambio'],
+    useEvenWithoutEvent: true,
 	async execute(message, props) {
         let commands = message.client.commands.map(e => e.data)
         

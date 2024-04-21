@@ -18,10 +18,10 @@ module.exports = new Command({
         if (props.args.includes('-c')) typeOfBattle = 'competition'
         if (existReq) return message.reply('¡Ups! Parece que uno de ustedes dos se encuentra dentro de otra batalla o un intercambio en este momento.')
 
-        await userInEvent.create(message.author.id, 'duel')
+        await userInEvent.create(message.author.id, 'duelo')
 
         if (!vsBot) {
-            await userInEvent.create(props.mention.id, 'duel')
+            await userInEvent.create(props.mention.id, 'duelo')
 
             message.channel.send(`<@${props.mention.id}>, el entrenador <@${message.author.id}> te ha retado a una batalla. ` + 'Responde `yes` o `sí` para aceptar el desafío.').then(msg => {
                 let start = false

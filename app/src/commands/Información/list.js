@@ -7,6 +7,8 @@ module.exports = new Command({
     name: "list",
     description: "Muestra todos los pokémon que has capturado.",
     cooldown: 4,
+    onlyInEvent: ['duelo', 'intercambio'],
+    useEvenWithoutEvent: true,
 	async execute(message, props) {
         let queries = { owner: message.author.id, page: 1 }
 

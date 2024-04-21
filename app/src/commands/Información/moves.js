@@ -7,6 +7,8 @@ module.exports = new Command({
     name: "moves",
     alias: ["movements"],
     description: "Muestra todos los movimientos de un Pokémon.",
+    onlyInEvent: ['duelo'],
+    useEvenWithoutEvent: true,
 	async execute(message, props) {
         let page = 1
         let moves = {}

@@ -10,7 +10,6 @@ module.exports = new Command({
     args: ['name'],
     cooldown: 4,
 	async execute(message, props) {
-        let emoji = message.client.emoji
         let response = checkWord(props.args.join(' ').toLowerCase())
         let spawn = (await axios.create({
             url: 'serena/server',
@@ -30,7 +29,7 @@ module.exports = new Command({
                 message,
                 data: {
                     color: 'green',
-                    description: `${emoji('check')} ¡Felicidades! Has capturado un ${channel.pokemon.shiny ? '⭐ ' : ''}**${channel.pokemon.name}** nivel **${level}**.`,
+                    description: `✅ ¡Felicidades! Has capturado un ${channel.pokemon.shiny ? '⭐ ' : ''}**${channel.pokemon.name}** nivel **${level}**.`,
                 },
             })
 

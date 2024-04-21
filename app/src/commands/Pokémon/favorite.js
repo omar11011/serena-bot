@@ -11,7 +11,6 @@ module.exports = new Command({
         if (isNaN(id)) id = null
         else id = parseInt(id)
 
-        let emoji = message.client.emoji
         let { data } = (await axios.get({
             url: `serena/capture?owner=${message.author.id}&limit=1${id ? 'skip=' + id : 'select=yes'}`,
         })).data
@@ -27,7 +26,7 @@ module.exports = new Command({
                 let response = m.content.toLowerCase()
 
                 if (['yes', 'sí', 'si', 'sim'].includes(response)) {
-                    m.react(emoji('check'))
+                    m.react('✅')
 
                     await axios.update({
                         url: 'serena/capture',

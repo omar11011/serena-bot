@@ -8,7 +8,6 @@ module.exports = new Command({
         let alias = props.args.length > 0 ? props.args.join(" ") : null
         if (alias && alias.length > 15) return message.reply(`El nombre de tu pokémon no puede tener más de 12 caracteres.`)
 
-        let emoji = message.client.emoji
         let { data } = (await axios.get({
             url: `serena/capture?owner=${message.author.id}&limit=1&select=yes`,
         })).data
@@ -26,7 +25,7 @@ module.exports = new Command({
                 let response = m.content.toLowerCase()
 
                 if (['yes', 'sí', 'si', 'sim'].includes(response)) {
-                    m.react(emoji('check'))
+                    m.react('✅')
 
                     await axios.update({
                         url: 'serena/capture',

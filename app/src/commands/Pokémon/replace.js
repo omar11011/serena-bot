@@ -8,7 +8,6 @@ module.exports = new Command({
     args: ['move'],
     cooldown: 4,
 	async execute(message, props) {
-        let emoji = message.client.emoji
         let move = checkWord(props.args.join(' ').toLowerCase())
         let { data } = (await axios.get({
             url: `serena/capture?owner=${message.author.id}&limit=1&select=yes`,
@@ -31,7 +30,7 @@ module.exports = new Command({
                 let response = m.content.toLowerCase()
 
                 if (['yes', 'sí', 'si', 'sim'].includes(response)) {
-                    m.react(emoji('check'))
+                    m.react('✅')
 
                     await axios.update({
                         url: 'serena/capture',

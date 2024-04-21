@@ -1,4 +1,5 @@
 const Command = require('../../class/Command')
+const getPokemonSelect = require('../../functions/getPokemonSelect')
 const { axios } = require('../../services')
 
 module.exports = new Command({
@@ -8,16 +9,12 @@ module.exports = new Command({
         let alias = props.args.length > 0 ? props.args.join(" ") : null
         if (alias && alias.length > 15) return message.reply(`El nombre de tu pokémon no puede tener más de 12 caracteres.`)
 
-        let { data } = (await axios.get({
-            url: `serena/capture?owner=${message.author.id}&limit=1&select=yes`,
-        })).data
+        let pokemon = await getPokemonSelect(message.author.id)
+        if (!pokemon) return message.reply('No tienes ningún pokémon seleccionado.')
 
-        if (data.length < 1) return message.reply('No tienes ningún pokémon seleccionado.')
-        else data = data[0]
+        if (alias && pokemon.name.toLowerCase() === alias.toLowerCase()) alias = null
 
-        if (alias && data.name.toLowerCase() === alias.toLowerCase()) alias = null
-
-        message.reply(`¿Estás segur@ de querer nombrar a ${data.shiny ? '⭐ ' : ''}**${data.alias || data.name}** como **${alias ? alias : data.name}**? Responde ` + '`sí` o `yes` para aceptar.').then(msg => {
+        message.reply(`¿Estás segur@ de querer nombrar a ${pokemon.shiny ? '⭐ ' : ''}**${pokemon.alias || pokemon.name}** como **${alias ? alias : pokemon.name}**? Responde ` + '`sí` o `yes` para aceptar.').then(msg => {
             const collectorFilter = m => m.author.id === message.author.id
             const collector = message.channel.createMessageCollector({ filter: collectorFilter, time: 5000, max: 1 })
 
@@ -30,12 +27,12 @@ module.exports = new Command({
                     await axios.update({
                         url: 'serena/capture',
                         props: {
-                            _id: data._id,
+                            _id: pokemon._id,
                             set: { alias },
                         },
                     })
 
-                    return m.reply(`Acabas de nombrar a ${data.shiny ? '⭐ ' : ''}**${data.alias || data.name}** como **${alias ? alias : data.name}**.`)
+                    return m.reply(`Acabas de nombrar a ${pokemon.shiny ? '⭐ ' : ''}**${pokemon.alias || pokemon.name}** como **${alias ? alias : pokemon.name}**.`)
                 }
             })
 

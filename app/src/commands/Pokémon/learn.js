@@ -1,5 +1,6 @@
 const Command = require('../../class/Command')
 const checkWord = require('../../utils/checkWord')
+const getPokemonSelect = require('../../functions/getPokemonSelect')
 const { axios } = require('../../services')
 
 module.exports = new Command({
@@ -10,12 +11,8 @@ module.exports = new Command({
 	async execute(message, props) {
         let maxMoves = 4
         let nameMove = checkWord(props.args.join(' ').toLowerCase())
-        let pokemon = (await axios.get({
-            url: `serena/capture?owner=${message.author.id}&limit=1&select=yes`,
-        })).data
-
-        if (pokemon.data.length < 1) return message.reply('No tienes seleccionado ningún pokémon.')
-        else pokemon = pokemon.data[0]
+        let pokemon = await getPokemonSelect(message.author.id)
+        if (!pokemon) return message.reply('No tienes ningún pokémon seleccionado.')
 
         let currentMoves = pokemon.movements.filter(e => e.category == 'nivel').map(e => checkWord(e.name.toLowerCase()))
 

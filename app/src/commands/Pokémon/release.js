@@ -1,4 +1,5 @@
 const Command = require('../../class/Command')
+const getPokemonSelect = require('../../functions/getPokemonSelect')
 const { axios } = require('../../services')
 
 module.exports = new Command({
@@ -9,14 +10,10 @@ module.exports = new Command({
         if (isNaN(id)) id = null
         else id = parseInt(id)
 
-        let { data } = (await axios.get({
-            url: `serena/capture?owner=${message.author.id}&limit=1&${id ? 'skip=' + id : 'select=yes'}`,
-        })).data
+        let pokemon = await getPokemonSelect(message.author.id)
+        if (!pokemon) return message.reply('No tienes ningún pokémon seleccionado.')
 
-        if (data.length < 1) return message.reply(id ? 'El ID ingresado es inválido.' : 'No tienes ningún pokémon seleccionado.')
-        else data = data[0]
-
-        message.reply(`¿Estás segur@ de querer liberar a ${data.shiny ? '⭐ ' : ''}**${data.alias || data.name}**? Responde ` + '`sí` o `yes` para aceptar.').then(msg => {
+        message.reply(`¿Estás segur@ de querer liberar a ${pokemon.shiny ? '⭐ ' : ''}**${pokemon.alias || pokemon.name}**? Responde ` + '`sí` o `yes` para aceptar.').then(msg => {
             const collectorFilter = m => m.author.id === message.author.id
             const collector = message.channel.createMessageCollector({ filter: collectorFilter, time: 5000, max: 1 })
 
@@ -29,12 +26,12 @@ module.exports = new Command({
                     await axios.update({
                         url: 'serena/capture',
                         props: {
-                            _id: data._id,
+                            _id: pokemon._id,
                             set: {owner: null, options: {} },
                         },
                     })
 
-                    return m.reply(`Acabas de liberar a ${data.shiny ? '⭐ ' : ''}**${data.alias || data.name}** 😢`)
+                    return m.reply(`Acabas de liberar a ${pokemon.shiny ? '⭐ ' : ''}**${pokemon.alias || pokemon.name}** 😢`)
                 }
             })
 

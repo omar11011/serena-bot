@@ -1,4 +1,5 @@
 const Command = require('../../class/Command')
+const getPokemonSelect = require('../../functions/getPokemonSelect')
 const { axios } = require('../../services')
 
 module.exports = new Command({
@@ -11,14 +12,10 @@ module.exports = new Command({
         if (isNaN(id)) id = null
         else id = parseInt(id)
 
-        let { data } = (await axios.get({
-            url: `serena/capture?owner=${message.author.id}&limit=1${id ? 'skip=' + id : 'select=yes'}`,
-        })).data
+        let pokemon = await getPokemonSelect(message.author.id)
+        if (!pokemon) return message.reply('No tienes ningún pokémon seleccionado.')
 
-        if (data.length < 1) return message.reply(id ? 'El ID ingresado es inválido.' : 'No tienes ningún pokémon seleccionado.')
-        else data = data[0]
-
-        message.reply(`${data.shiny ? '⭐ ' : ''}**${data.alias || data.name}** ${data.options.isFavorite ? 'ya' : 'no'} es uno de tus pokémon favoritos, ¿quieres ${data.options.isFavorite ? 'descartarlo' : 'añadirlo'} como favorito? Responde ` + '`sí` o `yes` para aceptar.').then(msg => {
+        message.reply(`${pokemon.shiny ? '⭐ ' : ''}**${pokemon.alias || pokemon.name}** ${pokemon.options.isFavorite ? 'ya' : 'no'} es uno de tus pokémon favoritos, ¿quieres ${pokemon.options.isFavorite ? 'descartarlo' : 'añadirlo'} como favorito? Responde ` + '`sí` o `yes` para aceptar.').then(msg => {
             const collectorFilter = m => m.author.id === message.author.id
             const collector = message.channel.createMessageCollector({ filter: collectorFilter, time: 5000, max: 1 })
 
@@ -31,12 +28,12 @@ module.exports = new Command({
                     await axios.update({
                         url: 'serena/capture',
                         props: {
-                            _id: data._id,
-                            set: { 'options.isFavorite': !data.options.isFavorite },
+                            _id: pokemon._id,
+                            set: { 'options.isFavorite': !pokemon.options.isFavorite },
                         },
                     })
 
-                    return m.reply(`Acabas de ${!data.options.isFavorite ? 'agregar' : 'retirar'} a ${data.shiny ? '⭐ ' : ''}**${data.alias || data.name}** ${!data.options.isFavorite ? 'a' : 'de'} tu lista de favoritos.`)
+                    return m.reply(`Acabas de ${!pokemon.options.isFavorite ? 'agregar' : 'retirar'} a ${pokemon.shiny ? '⭐ ' : ''}**${pokemon.alias || pokemon.name}** ${!pokemon.options.isFavorite ? 'a' : 'de'} tu lista de favoritos.`)
                 }
             })
 

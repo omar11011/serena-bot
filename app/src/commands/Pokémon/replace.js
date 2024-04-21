@@ -1,5 +1,6 @@
 const Command = require('../../class/Command')
 const checkWord = require('../../utils/checkWord')
+const getPokemonSelect = require('../../functions/getPokemonSelect')
 const { axios } = require('../../services')
 
 module.exports = new Command({
@@ -9,20 +10,16 @@ module.exports = new Command({
     cooldown: 4,
 	async execute(message, props) {
         let move = checkWord(props.args.join(' ').toLowerCase())
-        let { data } = (await axios.get({
-            url: `serena/capture?owner=${message.author.id}&limit=1&select=yes`,
-        })).data
+        let pokemon = await getPokemonSelect(message.author.id)
+        if (!pokemon) return message.reply('No tienes ningún pokémon seleccionado.')
 
-        if (data.length < 1) return message.reply('No tienes seleccionado ningún pokémon.')
-        else data = data[0]
-
-        let index = data.movements.map(e => checkWord(e.name.toLowerCase())).indexOf(move)
+        let index = pokemon.movements.map(e => checkWord(e.name.toLowerCase())).indexOf(move)
         if (index < 0)  return message.react('🧐')
 
-        let nameMove = data.movements[index].name
-        data.movements.splice(index, 1)
+        let nameMove = pokemon.movements[index].name
+        pokemon.movements.splice(index, 1)
 
-        message.reply(`**${data.alias || data.name}** está a punto de olvidar **${nameMove}**. Responde ` + '`sí` o `yes` para aceptar.').then(msg => {
+        message.reply(`**${pokemon.alias || pokemon.name}** está a punto de olvidar **${nameMove}**. Responde ` + '`sí` o `yes` para aceptar.').then(msg => {
             const collectorFilter = m => m.author.id === message.author.id
             const collector = message.channel.createMessageCollector({ filter: collectorFilter, time: 5000, max: 1 })
 
@@ -35,12 +32,12 @@ module.exports = new Command({
                     await axios.update({
                         url: 'serena/capture',
                         props: {
-                            _id: data._id,
-                            set: { movements: data.movements },
+                            _id: pokemon._id,
+                            set: { movements: pokemon.movements },
                         },
                     })
 
-                    return m.reply(`**${data.alias || data.name}** ha olvidado el movimiento **${nameMove}**.`)
+                    return m.reply(`**${pokemon.alias || pokemon.name}** ha olvidado el movimiento **${nameMove}**.`)
                 }
             })
 

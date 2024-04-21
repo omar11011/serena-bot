@@ -1,4 +1,5 @@
 const Command = require('../../class/Command')
+const getPokemonSelect = require('../../functions/getPokemonSelect')
 const { axios } = require('../../services')
 
 module.exports = new Command({
@@ -17,9 +18,8 @@ module.exports = new Command({
 
         if (data.options.isSelected) return message.reply(`Ya tenías seleccionado a ${data.shiny ? '⭐ ' : ''}**${data.alias || data.name}**.`)
 
-        let pokemonSelected = (await axios.get({
-            url: `serena/capture?owner=${message.author.id}&limit=1&select=yes`,
-        })).data.data
+        let pokemonSelected = await getPokemonSelect(message.author.id)
+        if (!pokemonSelected) pokemonSelected = []
         
         let changes = [data, ...pokemonSelected].forEach(async e => {
             await axios.update({

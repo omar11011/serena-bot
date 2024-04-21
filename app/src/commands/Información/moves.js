@@ -59,6 +59,7 @@ module.exports = new Command({
                             if (response === 'next' && page < pages) page += 1
                             else if (response === 'back' && page > 1) page -= 1
 
+                            msg.react('✅')
                             msg.edit({ embeds: [ await sendEmbed(data, moves, page) ] })
                         }
                     })

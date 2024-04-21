@@ -9,7 +9,6 @@ module.exports = new Command({
     cooldown: 4,
 	async execute(message, props) {
         let queries = { owner: message.author.id, page: 1 }
-        let emoji = message.client.emoji
 
         props.args.forEach(e => {
             e = e.toLowerCase()
@@ -44,7 +43,7 @@ module.exports = new Command({
                     })).data
                     
                     if (NEWDATA.data.length > 0) {
-                        m.react(emoji('check'))
+                        m.react('✅')
                         msg.edit({ embeds: [ await sendEmbed(NEWDATA) ] })
                     }
                 }

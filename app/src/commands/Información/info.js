@@ -37,7 +37,7 @@ module.exports = new Command({
         let description = [
             `**IV:** ${iv}%`,
             `**Nivel:** ${data.progress.level} (${data.progress.xp}/${data.progress.level * 100})`,
-            `**Sexo:** ${['male', 'female'].includes(data.gender) ? ':' + data.gender + '_sign:' : '❌'}`,
+            `**Sexo:** ${['male', 'female'].includes(data.gender) ? ':' + data.gender + '_sign:' : '❔'}`,
             `${data.options.onSale ? `**Precio:** ${data.options.marketPrice}` : ''}`,,
             `**Fecha de captura:** ${(new Date(data.createdAt)).toLocaleDateString('es-PE', { timeZone: 'America/Lima' })}`,
         ]

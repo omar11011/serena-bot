@@ -50,7 +50,7 @@ module.exports = async (msg, cmd, props) => {
 
     // Check if the user is in duel or exchange
     let eventType = await userInEvent.get(msg.author.id)
-    if (eventType && (!cmd.onlyEvent || !cmd.onlyInEvent.includes(eventType))) {
+    if (eventType && (!cmd.onlyInEvent || !cmd.onlyInEvent.includes(eventType))) {
         res.error = true
         res.msg = `No puedes usar este comando mientras estés en un ${eventType}.`
     }

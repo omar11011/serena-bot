@@ -2,17 +2,23 @@ const { axios } = require('../services')
 
 module.exports = async props => {
     let result = {
-        error: null,
+        error: 'No se encontró al pokémon capturado.',
         levelUp: false,
     }
     let { pokemon, xp } = props
 
-    if (!pokemon) {
-        result.error = 'No se incluyó al pokémon capturado.'
-        return result
+    if (!pokemon) return result
+    if (typeof pokemon === 'string') {
+        pokemon = (await axios.get({
+            url: `serena/capture?code=${pokemon}&limit=1`,
+        })).data.data
+
+        if (pokemon.length < 1) return result
+        else pokemon = pokemon[0]
     }
     if (!xp) xp = Math.ceil(Math.random() * 5)
 
+    result.error = false
     result.xp = xp
     result.levelUp = pokemon.progress.xp >= pokemon.progress.level * 100
 

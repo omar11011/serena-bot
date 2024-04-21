@@ -4,6 +4,8 @@ const { axios } = require('../../services')
 const createEmbed = require('../../utils/createEmbed')
 const getDuelData = require('../../functions/getDuelData')
 const userInEvent = require('../../functions/userInEvent')
+const addPokemonXP = require('../../functions/addPokemonXP')
+const calculateXPGained = require('../../functions/calculateXPGained')
 
 module.exports = new Command({
     name: "move",
@@ -44,6 +46,10 @@ module.exports = new Command({
                 props: { ids: [user._id, rival._id] },
             })
             await userInEvent.clear([user.battle.user, rival.battle.user])
+            await addPokemonXP({
+                pokemon: result.finish.pokemonId,
+                xp: calculateXPGained(duel, finish),
+            })
         }
         
         if (result.msgs.length > 0) {

@@ -12,13 +12,12 @@ module.exports = new Command({
             url: 'serena/user',
             props: { user: message.author.id },
         })).data
-        let emoji = message.client.emoji
 
         return createEmbed({
             message,
             data: {
                 color: 'green',
-                description: `🤑 Actualmente tienes:\n\n${emoji("money")} ${user.balance.money}\n:gem: ${user.balance.gems}`
+                description: `🤑 Actualmente tienes:\n\n💰 ${user.balance.money}\n💎 ${user.balance.gems}`
             },
         })
 	},

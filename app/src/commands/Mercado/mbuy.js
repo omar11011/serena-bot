@@ -1,27 +1,20 @@
 const Command = require('../../class/Command')
 
 const { axios } = require('../../services')
-const createEmbed = require('../../utils/createEmbed')
 
 module.exports = new Command({
     name: "marketbuy",
     alias: ["mbuy", "buym"],
     description: "Compra un Pokémon del mercado.",
     cooldown: 6,
-    args: ['option', 'id'],
+    args: ['id'],
 	async execute(message, props) {
         let data
-        let emoji = message.client.emoji
-        let option = props.args[0].toLowerCase()
-        let id = props.args[1]
+        let id = props.args[0]
 
-        if (!['p', 'i'].includes(option)) return message.reply('Opción inválida.')
-
-        if (option === 'p') {
-            data = (await axios.get({
-                url: `serena/capture?code=${id}&limit=1`,
-            })).data.data
-        }
+        data = (await axios.get({
+            url: `serena/capture?code=${id}&limit=1`,
+        })).data.data
 
         if (data.length < 1) return message.react('🧐')
         else data = data[0]
@@ -44,7 +37,7 @@ module.exports = new Command({
                 let response = m.content.toLowerCase()
 
                 if (['yes', 'sí', 'si', 'sim'].includes(response)) {
-                    m.react(emoji('check'))
+                    m.react('✅')
 
                     await axios.update({
                         url: 'serena/user',
@@ -65,7 +58,7 @@ module.exports = new Command({
                     }
             
                     await axios.update({
-                        url: 'serena/' + (option === 'p' ? 'capture' : 'item'),
+                        url: 'serena/capture',
                         props: {
                             _id: data._id,
                             set: {

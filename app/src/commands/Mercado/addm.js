@@ -1,31 +1,24 @@
 const Command = require('../../class/Command')
 
 const { axios } = require('../../services')
-const createEmbed = require('../../utils/createEmbed')
 
 module.exports = new Command({
     name: "addmarket",
     description: "Agrega uno de tus Pokémon al mercado.",
     cooldown: 6,
     alias: ['addm'],
-    args: ['option', 'id', 'precio'],
+    args: ['id', 'precio'],
 	async execute(message, props) {
         let data
-        let emoji = message.client.emoji
-        let option = props.args[0].toLowerCase()
-        let id = props.args[1]
-        let price = props.args[2]
+        let id = props.args[0]
+        let price = props.args[1]
 
-        if (!['p', 'i'].includes(option)) return message.reply('Opción no válida.')
         if (isNaN(price) || parseInt(price) < 1) return message.reply('El precio no es válido.')
+        if (isNaN(id) || parseInt(id) < 1) return message.reply('El ID no es válido.')
 
-        if (option == 'p') {
-            if (isNaN(id) || parseInt(id) < 1) return message.reply('El ID no es válido.')
-
-            data = (await axios.get({
-                url: `serena/capture?owner=${message.author.id}&limit=1&skip=${id}`,
-            })).data.data
-        }
+        data = (await axios.get({
+            url: `serena/capture?owner=${message.author.id}&limit=1&skip=${id}`,
+        })).data.data
 
         if (data.length < 1) return message.react('🧐')
         else data = data[0]
@@ -40,13 +33,13 @@ module.exports = new Command({
                 let response = m.content.toLowerCase()
 
                 if (['yes', 'sí', 'si', 'sim'].includes(response)) {
-                    m.react(emoji('check'))
+                    m.react('✅')
 
                     data.options.onSale = true
                     data.options.marketPrice = parseInt(price)
 
                     await axios.update({
-                        url: 'serena/' + (option === 'p' ? 'capture' : 'item'),
+                        url: 'serena/capture',
                         props: {
                             _id: data._id,
                             set: { options: data.options },

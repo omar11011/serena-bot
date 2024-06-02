@@ -14,17 +14,23 @@ module.exports = client => {
             const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'))
 
             for (const file of commandFiles) {
-                const filePath = path.join(commandsPath, file)
-                const command = require(filePath)
+                let command = []
+                let filePath = path.join(commandsPath, file)
+
+                if (folder === 'Acción') command = require(filePath)()
+                else command.push(require(filePath))
+
+                for (let i = 0; i < command.length; i++) {
                 
-                if ('data' in command && 'execute' in command) client.commands.set(command.data.name, {
-                    ...command,
-                    data: {
-                        ...command.data,
-                        category: folder,
-                    },
-                })
-                else console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`)
+                    if ('data' in command[i] && 'execute' in command[i]) client.commands.set(command[i].data.name, {
+                        ...command[i],
+                        data: {
+                            ...command[i].data,
+                            category: command[i].data.category || folder,
+                        },
+                    })
+
+                }
             }
 
         }

@@ -26,9 +26,7 @@ router.get('/pokemon/movement/:id', async (req, res) => await controller.getPoke
 router.get('/pokemon/spawn', async (req, res) => await controller.generatePokemonSpawn(req, res))
 
 // Gif
-router.post('/gif', isAuthorized, async (req, res) => await controller.createGif(req, res))
-router.get('/gif', async (req, res) => await controller.getAllGifs(req, res))
-router.get('/gif/:ctg', async (req, res) => await controller.getGif(req, res))
+router.get('/serena/gif/:ctg', async (req, res) => await controller.getGif(req, res))
 
 // Anime
 router.post('/anime', isAuthorized, async (req, res) => await controller.createCharacter(req, res))

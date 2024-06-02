@@ -4,7 +4,7 @@ const logMsg = require('../colors/logMsg')
 module.exports = async ({ url }) => {
 
     try {
-        const { data } = await axios.get(process.env.DB_URL + url)
+        const { data } = await axios.get(process.env.SITE_URL + 'api/' + url)
 
         return data
     }

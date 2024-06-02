@@ -17,7 +17,7 @@ module.exports = async message => {
     if (!fs.existsSync(dir + ctg)) fs.mkdirSync(dir + ctg)
 
     let gifs = fs.readdirSync(dir + ctg).filter(e => e.endsWith('.gif'))
-    if (gifs.length >= 25) return
+    if (gifs.length >= 30) return
 
     let name = embed.image.url.split('/').pop()
     if (gifs.includes(name)) return

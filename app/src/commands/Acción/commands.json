@@ -1,0 +1,92 @@
+[
+    {
+        "name": "angry",
+        "description": "Expresa tu molestia al mundo.",
+        "msgs": {
+            "mention": [
+                "USER se sintió muy furios@ con MENTION."
+            ],
+            "notMention": [
+                "USER se enfadó.",
+                "USER está explotando de ira."
+            ]
+        }
+    },
+    {
+        "name": "baka",
+        "description": "¡BAKA!",
+        "msgs": {
+            "mention": ["MENTION, ¡¡BAKA!!"],
+            "notMention": ["USER, ¡¡BAKA!!"]
+        }
+    },
+    {
+        "name": "bang",
+        "description": "Disparale a alguien. D:",
+        "msgs": {
+            "mention": ["USER apuntó y disparó a MENTION!"],
+            "notMention": ["BOT le dispara a USER. >:3"]
+        }
+    },
+    {
+        "name": "bite",
+        "description": "Muerde al usuario mencionado. O deja que yo te muerda. owo",
+        "msgs": {
+            "mention": ["¡USER da un mordisco juguetón a MENTION!"],
+            "notMention": ["Ñam... -muerde a USER-"]
+        }
+    },
+    {
+        "name": "bye",
+        "description": "Despídete en general o de alguien específico.",
+        "msgs": {
+            "mention": [
+                "Con una sonrisa tierna, USER se despide de MENTION. ~",
+                "USER voltea y dice, ¡Hasta la próxima, MENTION! ~"
+            ],
+            "notMention": ["USER se despide."]
+        }
+    },
+    {
+        "name": "cheeks",
+        "description": "Pellizca algunas mejillas.",
+        "msgs": {
+            "mention": [
+                "USER pellizca las adorables mejillas de MENTION.",
+                "¡USER no puede resistirse y pellizca las mejillas de MENTION!",
+                "Waah, USER no me hagas esto. (๑•﹏•)"
+            ],
+            "notMention": ["Jejeje"]
+        }
+    },
+    {
+        "name": "claps",
+        "description": "Aplaude de algo o aplaude a alguien.",
+        "msgs": {
+            "mention": [
+                "USER aplaude para MENTION en señal de aprobación",
+                "Con alegría, USER aplaude para MENTION"
+            ],
+            "notMention": ["USER está aplaudiendo."]
+        }
+    },
+    {
+        "name": "cook",
+        "description": "Cocina algo para ti o para alguien.",
+        "msgs": {
+            "mention": [
+                "¡USER cocina algo especial para MENTION!",
+                "¡USER cocina con amor para MENTION!"
+            ],
+            "notMention": ["USER está cocinando algo delicioso."]
+        }
+    },
+    {
+        "name": "cuddle",
+        "description": "Acurrúcate con alguien o conmigo.",
+        "msgs": {
+            "mention": ["USER se acercó a MENTION y se acurrucó"],
+            "notMention": ["Prrr, acurrúcate conmigo."]
+        }
+    }
+]

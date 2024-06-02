@@ -3,9 +3,9 @@ const getPokemonSelect = require('../../functions/getPokemonSelect')
 const addPokemonXP = require('../../functions/addPokemonXP')
 
 module.exports = new Command({
-    name: "catch",
+    name: "train",
     description: "Entrena a tu pokémon.",
-    cooldown: 30,
+    cooldown: 15,
 	async execute(message, props) {
         let pokemon = await getPokemonSelect(message.author.id)
         if (!pokemon) return message.reply('No tienes ningún pokémon seleccionado.')

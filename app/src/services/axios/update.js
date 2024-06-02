@@ -4,7 +4,7 @@ const logMsg = require('../colors/logMsg')
 module.exports = async ({ url, props }) => {
     
     try {
-        const { data } = await axios.put(process.env.DB_URL + url, {
+        const { data } = await axios.put(process.env.SITE_URL + 'api/' + url, {
             apiKey: process.env.DB_API_KEY,
             ...props,
         })
